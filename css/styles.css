@@ -211,15 +211,45 @@ nav.primary-nav a:hover, nav.primary-nav a.active { color: #fff; border-bottom-c
   border-top: 1px solid var(--line);
 }
 .trust-strip .wrap {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 18px 40px;
-  padding: 26px 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px 0;
+  padding: 32px 24px;
   font-size: 0.92rem;
   color: var(--stone);
 }
-.trust-strip strong { color: var(--ink); }
+.trust-strip .wrap > div {
+  text-align: center;
+  padding: 0 24px;
+}
+.trust-strip .wrap > div:not(:first-child) {
+  border-left: 1px solid var(--line);
+}
+.trust-strip .wrap > div::before {
+  content: "";
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brass);
+  margin: 0 auto 12px;
+}
+.trust-strip strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+@media (max-width: 760px) {
+  .trust-strip .wrap { grid-template-columns: 1fr; gap: 24px; }
+  .trust-strip .wrap > div:not(:first-child) {
+    border-left: none;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+}
 
 /* ---------- Path / steps (signature element) ---------- */
 .path-steps {
