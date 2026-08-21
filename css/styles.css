@@ -389,6 +389,7 @@ footer.site-footer ul { list-style: none; padding: 0; margin: 0; display: flex; 
   width: 220px;
   height: 220px;
   object-fit: cover;
+  object-position: center 30%;
   border: 4px solid var(--brass);
   box-shadow: 0 0 0 6px rgba(255,255,255,0.12);
 }
