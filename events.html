@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turning 65 Events | Chris Frasca Insurance Services</title>
+<meta name="description" content="Free Medicare workshops for people turning 65 or retiring soon. RSVP online and get automatic email confirmation and reminders.">
+<meta property="og:title" content="Turning 65 Events — Free Medicare Workshops">
+<meta property="og:description" content="Join a free, no-pressure Medicare workshop near you. RSVP takes two minutes.">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="18" stroke="#B8863C" stroke-width="1.6"/>
+        <circle cx="20" cy="20" r="2" fill="#B8863C"/>
+        <path d="M20 6 L23 18 L20 20 L17 18 Z" fill="#B8863C"/>
+        <path d="M20 34 L17 22 L20 20 L23 22 Z" fill="#F7F5F0" opacity="0.5"/>
+      </svg>
+      <span class="brand-text">Chris Frasca<small>Insurance Services</small></span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.primary-nav').classList.toggle('open')">&#9776;</button>
+    <nav class="primary-nav">
+      <a href="index.html">Home</a>
+      <a href="medicare-help.html">Medicare Help</a>
+      <a href="events.html" class="active">Turning 65 Events</a>
+      <a href="bookings.html">Book a Consultation</a>
+      <a href="contact.html">Contact</a>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get Free Guidance</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" style="padding:70px 0 80px;">
+  <div class="wrap" style="grid-template-columns:1fr;">
+    <div>
+      <span class="eyebrow">Free &middot; In-person &middot; No pressure</span>
+      <h1 style="font-size:clamp(2rem,4.4vw,3rem);">Turning 65 Events</h1>
+      <p class="lede">Short, plain-English workshops that cover the Medicare basics everyone wishes someone had explained sooner. RSVP below and I'll email you a confirmation and reminder.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div id="events-list"></div>
+  </div>
+</section>
+
+<section class="section-dim" id="rsvp">
+  <div class="wrap" style="max-width:760px;">
+    <div class="section-head center">
+      <span class="eyebrow">Reserve your seat</span>
+      <h2>RSVP</h2>
+      <p class="lede mx-auto">Pick your event below. You'll get an instant email confirmation and a reminder a few days before.</p>
+    </div>
+
+    <div class="form-card">
+      <div id="rsvp-status" class="form-status"></div>
+      <form id="rsvp-form">
+        <div class="field">
+          <label for="rsvp-event">Which event?</label>
+          <select id="rsvp-event" name="eventId" required>
+            <option value="" disabled selected>Choose an event...</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="rsvp-first">First name</label>
+            <input type="text" id="rsvp-first" name="firstName" required>
+          </div>
+          <div class="field">
+            <label for="rsvp-last">Last name</label>
+            <input type="text" id="rsvp-last" name="lastName" required>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="rsvp-email">Email</label>
+            <input type="email" id="rsvp-email" name="email" required>
+          </div>
+          <div class="field">
+            <label for="rsvp-phone">Phone</label>
+            <input type="tel" id="rsvp-phone" name="phone" placeholder="(optional)">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="rsvp-guests">Number attending (including you)</label>
+          <select id="rsvp-guests" name="guests">
+            <option value="1">Just me</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="rsvp-notes">Anything you'd like me to know? <span class="hint">(optional)</span></label>
+          <textarea id="rsvp-notes" name="notes" rows="3" placeholder="Questions, accessibility needs, etc."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">RSVP Now</button>
+        <p class="hint center" style="margin-top:14px;">Your info is only used to plan the event and follow up with you &mdash; never sold or shared.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" id="site-footer"></footer>
+<script src="js/events-data.js"></script>
+<script src="js/footer.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/events.js"></script>
+</body>
+</html>
