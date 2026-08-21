@@ -190,6 +190,8 @@ nav.primary-nav a:hover, nav.primary-nav a.active { color: #fff; border-bottom-c
   position: relative;
   overflow: hidden;
 }
+.hero { color: var(--white); }
+.hero h1, .hero h2 { color: var(--white); }
 .hero .wrap { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 56px; align-items: center; }
 .hero p.lede { color: rgba(255,255,255,0.78); }
 .hero .eyebrow { color: var(--brass); }
