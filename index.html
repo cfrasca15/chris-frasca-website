@@ -131,22 +131,29 @@
       <p class="lede mx-auto">&#9733;&#9733;&#9733;&#9733;&#9733; 5.0 stars from 43 Google reviews</p>
     </div>
     <!-- EDIT ME: replace these three placeholder quotes with real ones from your Google reviews. -->
-    <div class="review-grid">
-      <div class="review-card">
-        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="review-quote">"Chris walked us through every option and never once made us feel rushed or pressured. We finally understood Medicare."</p>
-        <div class="review-author">— Replace with a real client name</div>
+    <div class="review-carousel" data-review-carousel>
+      <button type="button" class="review-nav review-nav-prev" aria-label="Previous review">&#8249;</button>
+      <div class="review-viewport">
+        <div class="review-track">
+          <div class="review-card review-slide">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">"Chris walked us through every option and never once made us feel rushed or pressured. We finally understood Medicare."</p>
+            <div class="review-author">— Replace with a real client name</div>
+          </div>
+          <div class="review-card review-slide">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">"Free, honest, and easy to work with. He checked my medications against every plan before I decided anything."</p>
+            <div class="review-author">— Replace with a real client name</div>
+          </div>
+          <div class="review-card review-slide">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">"I recommend Chris to everyone I know turning 65. He makes a confusing process feel simple."</p>
+            <div class="review-author">— Replace with a real client name</div>
+          </div>
+        </div>
       </div>
-      <div class="review-card">
-        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="review-quote">"Free, honest, and easy to work with. He checked my medications against every plan before I decided anything."</p>
-        <div class="review-author">— Replace with a real client name</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="review-quote">"I recommend Chris to everyone I know turning 65. He makes a confusing process feel simple."</p>
-        <div class="review-author">— Replace with a real client name</div>
-      </div>
+      <button type="button" class="review-nav review-nav-next" aria-label="Next review">&#8250;</button>
+      <div class="review-dots"></div>
     </div>
     <div class="center" style="margin-top:36px;">
       <!-- EDIT ME: replace this href with your real Google Business review link -->
@@ -179,5 +186,6 @@
 
 <script src="js/footer.js"></script>
 <script src="js/nav.js"></script>
+<script src="js/reviews.js"></script>
 </body>
 </html>
