@@ -3,28 +3,28 @@
    Theme: "The clear path through Medicare"
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Public+Sans:wght@400;500;600;700&display=swap');
 
 :root {
   /* Color tokens */
-  --ink:        #16273D;   /* primary navy — headers, nav, hero */
+  --ink:        #17324A;   /* primary navy — headers, nav, hero */
   --ink-soft:   #2F4858;   /* secondary navy — supporting panels */
-  --brass:      #B8863C;   /* accent — CTAs, compass needle, links */
-  --brass-dark: #8A611F;
-  --paper:      #F7F5F0;   /* main background */
-  --paper-dim:  #EFEBE2;   /* card / section background */
+  --brass:      #A8763A;   /* accent — CTAs, compass needle, links */
+  --brass-dark: #7A5420;
+  --paper:      #F8F5EF;   /* main background */
+  --paper-dim:  #EDE7DA;   /* card / section background */
   --charcoal:   #22282E;   /* body text */
   --stone:      #4A525C;   /* muted / secondary text — darkened for readability */
-  --line:       #DCD6C8;   /* hairline borders */
+  --line:       #DBD3C2;   /* hairline borders */
   --white:      #FFFFFF;
   --success:    #3F7A57;
   --error:      #A3432F;
 
   /* Type */
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Spectral', Georgia, serif;
+  --font-body: 'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  --radius: 4px;
+  --radius: 10px;
   --max-width: 1120px;
 }
 
@@ -68,11 +68,19 @@ p { margin: 0 0 1em; color: var(--charcoal); }
   font-family: var(--font-body);
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--brass-dark);
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 0.9em;
+}
+.eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: var(--brass-dark);
 }
 
 .wrap {
@@ -93,7 +101,7 @@ section.tight { padding: 56px 0; }
   font-weight: 600;
   font-size: 1.08rem;
   padding: 16px 30px;
-  border-radius: var(--radius);
+  border-radius: 999px;
   text-decoration: none;
   border: 1.5px solid transparent;
   cursor: pointer;
@@ -259,32 +267,30 @@ nav.primary-nav a:hover, nav.primary-nav a.active { color: #fff; border-bottom-c
   gap: 40px;
   margin-top: 56px;
 }
-.path-steps::before {
-  content: "";
-  position: absolute;
-  top: 27px;
-  left: calc(16.6% + 10px);
-  right: calc(16.6% + 10px);
-  height: 0;
-  border-top: 2px dashed var(--line);
-  z-index: 0;
-}
 .step {
   position: relative;
   z-index: 1;
 }
 .step-marker {
-  width: 54px; height: 54px;
-  border-radius: 50%;
-  background: var(--ink);
-  color: var(--brass);
-  display: flex; align-items: center; justify-content: center;
+  display: inline-block;
+  position: relative;
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-style: italic;
   font-weight: 600;
-  margin-bottom: 20px;
-  border: 3px solid var(--paper);
-  box-shadow: 0 0 0 2px var(--line);
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--brass);
+  margin-bottom: 22px;
+  padding-bottom: 12px;
+}
+.step-marker::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 30px;
+  height: 2px;
+  background: var(--brass);
 }
 .step ul { padding-left: 18px; margin: 10px 0 0; color: var(--stone); }
 .step li { margin-bottom: 4px; }
