@@ -11,11 +11,18 @@ exports.handler = async () => {
   const { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_REVIEWS_TABLE_NAME } = process.env;
 
   try {
+    const params = new URLSearchParams({
+      'sort[0][field]': 'Publish Time',
+      'sort[0][direction]': 'desc'
+    });
     const res = await fetch(
-      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_REVIEWS_TABLE_NAME)}?sort[0][field]=Publish Time&sort[0][direction]=desc`,
+      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_REVIEWS_TABLE_NAME)}?${params}`,
       { headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}` } }
     );
     const json = await res.json();
+    if (json.error) {
+      console.error('Airtable error:', json.error);
+    }
     const reviews = (json.records || []).map(rec => ({
       author: rec.fields['Author Name'],
       rating: rec.fields['Rating'],
