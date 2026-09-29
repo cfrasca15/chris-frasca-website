@@ -5,6 +5,9 @@
 [functions."send-reminders"]
   schedule = "@daily"
 
+[functions."fetch-google-reviews"]
+  schedule = "@daily"
+
 [[headers]]
   for = "/*"
   [headers.values]

@@ -152,7 +152,59 @@ Want reminders sent a different number of days before the event? Change
 
 ---
 
-## 6. A note on compliance
+## 6. Showing real Google reviews on the homepage
+
+The homepage's review carousel can pull your actual Google reviews automatically
+instead of the placeholder quotes. A scheduled function checks Google once a day and
+caches the results in Airtable; the page reads that cache. (Google's API only ever
+returns your 5 most relevant reviews, chosen by Google — there's no way to show all
+of them or pick which ones.)
+
+### A. Find your Google Place ID
+1. Go to Google's [Place ID Finder](https://developers.google.com/maps/documentation/places/web-service/place-id).
+2. Search for "Chris Frasca Insurance Services" and copy the Place ID (starts with `ChIJ...`).
+
+### B. Get a Google Places API key
+1. In the [Google Cloud Console](https://console.cloud.google.com/), create a project (or use an existing one).
+2. Enable the **Places API (New)**.
+3. Create an API key under **APIs & Services → Credentials**. For safety, restrict it to the Places API only.
+4. Google's free monthly credit comfortably covers one API call a day.
+
+### C. Add a second Airtable table
+1. In the same **Website** base you already created, add a new table called **GoogleReviews**.
+2. Create these columns:
+
+   | Field name    | Type              |
+   |---------------|-------------------|
+   | Review ID     | Single line text  |
+   | Author Name   | Single line text  |
+   | Rating        | Number            |
+   | Review Text   | Long text         |
+   | Publish Time  | Single line text  |
+
+### D. Add the new environment variables in Netlify
+   | Key | Value |
+   |---|---|
+   | `GOOGLE_PLACES_API_KEY` | your Google API key from step B |
+   | `GOOGLE_PLACE_ID` | your Place ID from step A |
+   | `AIRTABLE_REVIEWS_TABLE_NAME` | `GoogleReviews` |
+
+   (Reuses the `AIRTABLE_API_KEY` and `AIRTABLE_BASE_ID` you already have.)
+
+### E. Run it once manually
+The function normally runs automatically every day, but scheduled functions only
+run on their schedule — they won't fire on your first deploy. To populate reviews
+right away, open in your browser (once, after deploying):
+`https://chrisfrascainsurance.com/.netlify/functions/fetch-google-reviews`
+
+After that, refresh the homepage — the carousel should show your real reviews. If
+nothing shows, it silently falls back to the placeholder quotes already in
+`index.html`, so the page never breaks even if a key is missing or Google's API is
+briefly down.
+
+---
+
+## 7. A note on compliance
 
 Medicare marketing has specific CMS rules (required disclaimers, no misleading claims,
 etc.). The disclaimer language already on the site (in the footer) mirrors what was on

@@ -1,4 +1,42 @@
-document.querySelectorAll('[data-review-carousel]').forEach(initReviewCarousel);
+document.querySelectorAll('[data-review-carousel]').forEach(setupReviewCarousel);
+
+async function setupReviewCarousel(root) {
+  try {
+    const res = await fetch('/.netlify/functions/get-reviews');
+    if (res.ok) {
+      const { reviews } = await res.json();
+      if (Array.isArray(reviews) && reviews.length > 0) renderReviews(root, reviews);
+    }
+  } catch (err) {
+    // Function unreachable (e.g. viewing the site as a local file) — keep
+    // the placeholder reviews already in the HTML.
+  }
+  initReviewCarousel(root);
+}
+
+function renderReviews(root, reviews) {
+  const track = root.querySelector('.review-track');
+  track.innerHTML = '';
+  reviews.forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'review-card review-slide';
+
+    const stars = document.createElement('div');
+    stars.className = 'review-stars';
+    stars.textContent = '★'.repeat(Math.max(1, Math.min(5, Math.round(r.rating || 5))));
+
+    const quote = document.createElement('p');
+    quote.className = 'review-quote';
+    quote.textContent = '"' + (r.text || '') + '"';
+
+    const author = document.createElement('div');
+    author.className = 'review-author';
+    author.textContent = '— ' + (r.author || 'Google user');
+
+    card.append(stars, quote, author);
+    track.appendChild(card);
+  });
+}
 
 function initReviewCarousel(root) {
   const track = root.querySelector('.review-track');
