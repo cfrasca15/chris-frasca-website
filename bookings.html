@@ -6,12 +6,12 @@
 <title>Book a Consultation | Chris Frasca Insurance Services</title>
 <meta name="description" content="Schedule your free, no-obligation Medicare consultation with Chris Frasca online in a few clicks.">
 <link rel="stylesheet" href="css/styles.css">
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <style>
   .booking-frame-wrap {
     background: var(--white);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    overflow: hidden;
   }
   .booking-frame-wrap iframe {
     width: 100%;
@@ -19,8 +19,14 @@
     border: none;
     display: block;
   }
-  @media (max-width: 600px) {
-    .booking-frame-wrap iframe { height: 1100px; }
+  .booking-mobile-cta { display: none; }
+  /* Mobile browsers frequently trap touch-scroll inside a nested iframe,
+     making the final "Confirm" step unreachable in the inline embed.
+     Below this width we use Calendly's popup widget instead, which opens
+     as a top-level overlay and isn't affected by that nested-scroll bug. */
+  @media (max-width: 760px) {
+    .booking-frame-wrap { display: none; }
+    .booking-mobile-cta { display: block; }
   }
 </style>
 </head>
@@ -63,8 +69,11 @@
   <div class="wrap">
     <div class="booking-frame-wrap">
       <div class="calendly-inline-widget" data-url="https://calendly.com/chrisfrascainsurance" style="min-width:320px;height:900px;"></div>
-      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
     </div>
+    <div class="booking-mobile-cta center">
+      <a href="https://calendly.com/chrisfrascainsurance" target="_blank" rel="noopener" class="btn btn-primary btn-block" onclick="if (window.Calendly) { Calendly.initPopupWidget({url: 'https://calendly.com/chrisfrascainsurance'}); return false; }">Book Your Free Consultation</a>
+    </div>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
     <p class="hint center" style="margin-top:18px;">Having trouble with the scheduler? Call or email me directly at <a href="tel:9492596744">949-259-6744</a> or <a href="mailto:chris@chrisfrascainsurance.com">chris@chrisfrascainsurance.com</a>.</p>
   </div>
 </section>
