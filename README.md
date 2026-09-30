@@ -191,13 +191,17 @@ of them or pick which ones.)
 
    (Reuses the `AIRTABLE_API_KEY` and `AIRTABLE_BASE_ID` you already have.)
 
-### E. Run it once manually
-The function normally runs automatically every day, but scheduled functions only
-run on their schedule — they won't fire on your first deploy. To populate reviews
-right away, open in your browser (once, after deploying):
-`https://chrisfrascainsurance.com/.netlify/functions/fetch-google-reviews`
+### E. Run a sync
+The reviews refresh automatically every day, but you can also force an update any
+time (e.g. right after a great new review comes in) by opening this in your browser:
+`https://chrisfrascainsurance.com/.netlify/functions/refresh-reviews`
 
-After that, refresh the homepage — the carousel should show your real reviews. If
+It'll show a message like `Cached 5 review(s)`. (Note: the daily scheduled function
+itself, `fetch-google-reviews`, can't be triggered manually this way — Netlify only
+allows scheduled functions to run on their cron schedule, which is exactly why this
+separate on-demand endpoint exists.)
+
+After running it, refresh the homepage — the carousel should show your real reviews. If
 nothing shows, it silently falls back to the placeholder quotes already in
 `index.html`, so the page never breaks even if a key is missing or Google's API is
 briefly down.

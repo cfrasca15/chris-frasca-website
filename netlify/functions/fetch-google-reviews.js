@@ -15,84 +15,14 @@
 //   AIRTABLE_API_KEY        - same token used by rsvp.js
 //   AIRTABLE_BASE_ID        - same base used by rsvp.js
 //   AIRTABLE_REVIEWS_TABLE_NAME - e.g. "GoogleReviews" (a separate table from RSVPs)
+//
+// To force a sync right away instead of waiting for the daily schedule, use
+// refresh-reviews.js — Netlify doesn't allow scheduled functions to be
+// triggered manually via their URL.
+
+const { syncGoogleReviews } = require('./lib/sync-google-reviews');
 
 exports.handler = async () => {
-  const {
-    GOOGLE_PLACES_API_KEY, GOOGLE_PLACE_ID,
-    AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_REVIEWS_TABLE_NAME
-  } = process.env;
-
-  let reviews = [];
-  try {
-    const res = await fetch(
-      `https://places.googleapis.com/v1/places/${GOOGLE_PLACE_ID}`,
-      {
-        headers: {
-          'X-Goog-Api-Key': GOOGLE_PLACES_API_KEY,
-          'X-Goog-FieldMask': 'reviews'
-        }
-      }
-    );
-    const json = await res.json();
-    if (json.error) {
-      console.error('Places API error:', json.error);
-      return { statusCode: 502, body: 'Places API error' };
-    }
-    reviews = json.reviews || [];
-  } catch (err) {
-    console.error('Places API fetch failed:', err);
-    return { statusCode: 502, body: 'Places API fetch failed' };
-  }
-
-  const tableUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_REVIEWS_TABLE_NAME)}`;
-  const airtableHeaders = {
-    'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-    'Content-Type': 'application/json'
-  };
-
-  const freshIds = reviews.map(r => r.name);
-
-  // Remove any cached reviews that are no longer in Google's top 5
-  try {
-    const existingRes = await fetch(tableUrl, { headers: airtableHeaders });
-    const existingJson = await existingRes.json();
-    const staleRecordIds = (existingJson.records || [])
-      .filter(rec => !freshIds.includes(rec.fields['Review ID']))
-      .map(rec => rec.id);
-
-    for (let i = 0; i < staleRecordIds.length; i += 10) {
-      const batch = staleRecordIds.slice(i, i + 10);
-      const query = batch.map(id => `records[]=${id}`).join('&');
-      await fetch(`${tableUrl}?${query}`, { method: 'DELETE', headers: airtableHeaders });
-    }
-  } catch (err) {
-    console.error('Airtable cleanup failed:', err);
-  }
-
-  // Upsert the current top reviews
-  if (reviews.length > 0) {
-    try {
-      await fetch(tableUrl, {
-        method: 'PATCH',
-        headers: airtableHeaders,
-        body: JSON.stringify({
-          performUpsert: { fieldsToMergeOn: ['Review ID'] },
-          records: reviews.map(r => ({
-            fields: {
-              'Review ID': r.name,
-              'Author Name': r.authorAttribution?.displayName || 'Google user',
-              'Rating': r.rating || 5,
-              'Review Text': r.text?.text || r.originalText?.text || '',
-              'Publish Time': r.publishTime || ''
-            }
-          }))
-        })
-      });
-    } catch (err) {
-      console.error('Airtable upsert failed:', err);
-      return { statusCode: 500, body: 'Airtable upsert failed' };
-    }
-  }
-
-  return { statusCode: 200, body: `Cached ${reviews.length} review(s)` };
+  const result = await syncGoogleReviews();
+  return { statusCode: result.ok ? 200 : 500, body: result.message };
 };
