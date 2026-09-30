@@ -5,6 +5,11 @@
 // right away, since Netlify only allows scheduled functions to run on
 // their cron schedule — they can't be triggered manually via their URL).
 
+function describeError(error) {
+  if (typeof error === 'string') return error;
+  return error.message || error.type || JSON.stringify(error);
+}
+
 async function syncGoogleReviews() {
   const {
     GOOGLE_PLACES_API_KEY, GOOGLE_PLACE_ID,
@@ -25,7 +30,7 @@ async function syncGoogleReviews() {
     const json = await res.json();
     if (json.error) {
       console.error('Places API error:', json.error);
-      return { ok: false, message: `Places API error: ${json.error.message}` };
+      return { ok: false, message: `Places API error: ${describeError(json.error)}` };
     }
     reviews = json.reviews || [];
   } catch (err) {
@@ -47,7 +52,7 @@ async function syncGoogleReviews() {
     const existingJson = await existingRes.json();
     if (existingJson.error) {
       console.error('Airtable read error:', existingJson.error);
-      return { ok: false, message: `Airtable read error: ${existingJson.error.message}` };
+      return { ok: false, message: `Airtable read error: ${describeError(existingJson.error)}` };
     }
     const staleRecordIds = (existingJson.records || [])
       .filter(rec => !freshIds.includes(rec.fields['Review ID']))
@@ -84,7 +89,7 @@ async function syncGoogleReviews() {
       const upsertJson = await upsertRes.json();
       if (upsertJson.error) {
         console.error('Airtable upsert error:', upsertJson.error);
-        return { ok: false, message: `Airtable upsert error: ${upsertJson.error.message}` };
+        return { ok: false, message: `Airtable upsert error: ${describeError(upsertJson.error)}` };
       }
     } catch (err) {
       console.error('Airtable upsert failed:', err);
