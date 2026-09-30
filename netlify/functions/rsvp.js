@@ -41,7 +41,7 @@ exports.handler = async (event) => {
 
   // 1. Save to Airtable
   try {
-    await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`, {
+    const airtableRes = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
@@ -65,6 +65,9 @@ exports.handler = async (event) => {
         }
       })
     });
+    if (!airtableRes.ok) {
+      console.error('Airtable error:', airtableRes.status, await airtableRes.text());
+    }
   } catch (err) {
     console.error('Airtable error:', err);
     // Continue anyway — don't block the confirmation email on a storage hiccup
@@ -72,7 +75,7 @@ exports.handler = async (event) => {
 
   // 2. Send confirmation email to attendee
   try {
-    await fetch('https://api.resend.com/emails', {
+    const confirmRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
@@ -97,13 +100,16 @@ exports.handler = async (event) => {
         `
       })
     });
+    if (!confirmRes.ok) {
+      console.error('Resend confirmation error:', confirmRes.status, await confirmRes.text());
+    }
   } catch (err) {
     console.error('Resend confirmation error:', err);
   }
 
   // 3. Notify the owner
   try {
-    await fetch('https://api.resend.com/emails', {
+    const ownerRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
@@ -124,6 +130,9 @@ exports.handler = async (event) => {
         `
       })
     });
+    if (!ownerRes.ok) {
+      console.error('Resend owner notification error:', ownerRes.status, await ownerRes.text());
+    }
   } catch (err) {
     console.error('Resend owner notification error:', err);
   }

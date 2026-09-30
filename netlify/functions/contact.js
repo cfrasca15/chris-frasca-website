@@ -23,7 +23,7 @@ exports.handler = async (event) => {
   const { RESEND_API_KEY, FROM_EMAIL, OWNER_EMAIL } = process.env;
 
   try {
-    await fetch('https://api.resend.com/emails', {
+    const ownerRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -42,8 +42,12 @@ exports.handler = async (event) => {
         `
       })
     });
+    if (!ownerRes.ok) {
+      console.error('Resend owner email failed:', ownerRes.status, await ownerRes.text());
+      return { statusCode: 502, body: 'Email send failed' };
+    }
 
-    await fetch('https://api.resend.com/emails', {
+    const replyRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -59,6 +63,11 @@ exports.handler = async (event) => {
         `
       })
     });
+    if (!replyRes.ok) {
+      // The important email (to Chris) already succeeded — log this one but
+      // don't fail the whole request over the visitor's nice-to-have auto-reply.
+      console.error('Resend auto-reply failed:', replyRes.status, await replyRes.text());
+    }
   } catch (err) {
     console.error('Resend contact error:', err);
     return { statusCode: 502, body: 'Email send failed' };

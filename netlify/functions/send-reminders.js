@@ -39,7 +39,7 @@ exports.handler = async () => {
   for (const record of records) {
     const f = record.fields;
     try {
-      await fetch('https://api.resend.com/emails', {
+      const emailRes = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -61,6 +61,11 @@ exports.handler = async () => {
           `
         })
       });
+
+      if (!emailRes.ok) {
+        console.error(`Reminder email failed for record ${record.id}:`, emailRes.status, await emailRes.text());
+        continue; // Don't mark as sent — let tomorrow's run retry it
+      }
 
       // Mark as reminded so it's never sent twice
       await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}/${record.id}`, {
