@@ -104,6 +104,11 @@ Open `js/events-data.js` and copy/paste a new block inside the `EVENTS` list:
 - Save the file and re-upload/redeploy (or just push to GitHub if you've connected that).
 - The event automatically appears as a card on the Events page **and** as a choice in
   the RSVP dropdown — nothing else to update.
+- **Hosting registration somewhere else** (e.g. an event platform run by a venue or
+  partner)? Add `registerUrl: "https://..."` to the event. Its button then links there
+  instead of using this site's RSVP form, and it stays out of the dropdown. If the link
+  isn't ready yet, add `registrationOpensSoon: true` instead, and swap it for
+  `registerUrl` later. When no events use the on-site form, the RSVP section hides itself.
 
 **Direct RSVP link for Facebook**: once an event is live, you can link straight to its
 RSVP form (pre-selected) with:

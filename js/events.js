@@ -24,6 +24,15 @@ function renderEvents() {
   upcoming.forEach(ev => {
     const d = formatDate(ev.date);
 
+    let action;
+    if (ev.registerUrl) {
+      action = `<a href="${ev.registerUrl}" class="btn btn-primary" target="_blank" rel="noopener">Register for this event</a>`;
+    } else if (ev.registrationOpensSoon) {
+      action = `<p class="hint" style="margin:0;">Registration opens soon &mdash; check back, or call <a href="tel:9492596744" style="white-space:nowrap;">949-259-6744</a>.</p>`;
+    } else {
+      action = `<a href="#rsvp" class="btn btn-primary rsvp-jump" data-event="${ev.id}">RSVP for this event</a>`;
+    }
+
     const card = document.createElement('div');
     card.className = 'event-card';
     card.style.marginBottom = '26px';
@@ -41,16 +50,23 @@ function renderEvents() {
         </div>
         <p>${ev.description}</p>
         <p class="hint" style="margin-bottom:16px;">${ev.spots || ''}</p>
-        <a href="#rsvp" class="btn btn-primary rsvp-jump" data-event="${ev.id}">RSVP for this event</a>
+        ${action}
       </div>
     `;
     list.appendChild(card);
 
-    const opt = document.createElement('option');
-    opt.value = ev.id;
-    opt.textContent = `${d.full} — ${ev.title}`;
-    select.appendChild(opt);
+    // Only events registered through this site's own form go in the dropdown.
+    if (!ev.registerUrl && !ev.registrationOpensSoon) {
+      const opt = document.createElement('option');
+      opt.value = ev.id;
+      opt.textContent = `${d.full} — ${ev.title}`;
+      select.appendChild(opt);
+    }
   });
+
+  // No events use the on-site form (e.g. all registration happens on the host's page): hide it.
+  const rsvpSection = document.getElementById('rsvp');
+  if (rsvpSection && select.options.length <= 1) rsvpSection.style.display = 'none';
 
   // Jump + preselect
   document.querySelectorAll('.rsvp-jump').forEach(btn => {
