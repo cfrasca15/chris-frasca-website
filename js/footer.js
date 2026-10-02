@@ -11,11 +11,11 @@ document.addEventListener('DOMContentLoaded', function () {
         <div>
           <h4>Site</h4>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="medicare-help.html">Medicare Help</a></li>
-            <li><a href="events.html">Turning 65 Events</a></li>
-            <li><a href="bookings.html">Book a Consultation</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/medicare-help.html">Medicare Help</a></li>
+            <li><a href="/events.html">Turning 65 Events</a></li>
+            <li><a href="/bookings.html">Book a Consultation</a></li>
+            <li><a href="/contact.html">Contact</a></li>
           </ul>
         </div>
         <div>

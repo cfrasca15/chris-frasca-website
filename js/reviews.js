@@ -84,6 +84,7 @@ function initReviewCarousel(root) {
 
   function restartAutoplay() {
     stopAutoplay();
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     timer = setInterval(() => goTo(index + 1), AUTOPLAY_MS);
   }
 

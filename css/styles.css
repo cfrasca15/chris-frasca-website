@@ -13,6 +13,8 @@
   --ink-soft:   #2F4858;   /* secondary navy — supporting panels */
   --brass:      #A8763A;   /* accent — CTAs, compass needle, links */
   --brass-dark: #7A5420;
+  --brass-btn:  #9A6B30;   /* button fill: white text on this passes WCAG AA */
+  --brass-light:#D9AE6A;   /* brass for small text on navy backgrounds */
   --paper:      #F8F5EF;   /* main background */
   --paper-dim:  #EDE7DA;   /* card / section background */
   --charcoal:   #22282E;   /* body text */
@@ -82,7 +84,7 @@ p { margin: 0 0 1em; color: var(--charcoal); }
   content: "";
   width: 22px;
   height: 1px;
-  background: var(--brass-dark);
+  background: currentColor;
 }
 
 .wrap {
@@ -111,7 +113,7 @@ section.tight { padding: 56px 0; }
   min-height: 52px;
 }
 .btn-primary {
-  background: var(--brass);
+  background: var(--brass-btn);
   color: var(--white);
 }
 .btn-primary:hover { background: var(--brass-dark); transform: translateY(-1px); }
@@ -154,14 +156,14 @@ header.site-header {
 }
 .brand-mark { width: 34px; height: 34px; flex-shrink: 0; }
 .brand-text { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; letter-spacing: 0.01em; }
-.brand-text small { display: block; font-family: var(--font-body); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: var(--brass); margin-top: 2px; }
+.brand-text small { display: block; font-family: var(--font-body); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: var(--brass-light); margin-top: 2px; }
 
 .nav-right { display: flex; align-items: center; gap: 18px; }
 .header-phone {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: var(--brass);
+  color: var(--brass-light);
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
@@ -183,10 +185,22 @@ nav.primary-nav a:hover, nav.primary-nav a.active { color: #fff; border-bottom-c
 .nav-cta { margin-left: 6px; }
 .nav-toggle { display: none; }
 
-@media (max-width: 780px) {
+/* Mid-size screens: tighten the header so every label stays on one line. */
+@media (min-width: 1101px) and (max-width: 1320px) {
+  .nav-right { gap: 14px; }
+  nav.primary-nav { gap: 16px; }
+  nav.primary-nav a { font-size: 0.95rem; }
+  .nav-cta { margin-left: 2px; padding: 12px 20px; min-height: 46px; font-size: 0.95rem; }
+  .header-phone { font-size: 0.9rem; }
+  .brand-text { font-size: 1.05rem; }
+}
+
+/* Tablets and phones: collapse the links into the menu button. */
+@media (max-width: 1100px) {
   nav.primary-nav {
     position: fixed;
-    inset: 64px 0 0 0;
+    inset: var(--header-h, 64px) 0 0 0;
+    overflow-y: auto;
     background: var(--ink);
     flex-direction: column;
     align-items: flex-start;
@@ -219,7 +233,7 @@ nav.primary-nav a:hover, nav.primary-nav a.active { color: #fff; border-bottom-c
 .hero h1, .hero h2 { color: var(--white); }
 .hero .wrap { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 56px; align-items: center; }
 .hero p.lede { color: rgba(255,255,255,0.78); }
-.hero .eyebrow { color: var(--brass); }
+.hero .eyebrow, .section-ink .eyebrow { color: var(--brass-light); }
 .hero-cta-row { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
 .hero-figure { display: flex; align-items: center; justify-content: center; }
 
@@ -432,9 +446,9 @@ footer.site-footer .wrap { }
 footer.site-footer h4 { color: #fff; font-family: var(--font-body); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
 footer.site-footer p { color: rgba(255,255,255,0.65); }
 footer.site-footer a { color: rgba(255,255,255,0.72); text-decoration: none; }
-footer.site-footer a:hover { color: var(--brass); }
+footer.site-footer a:hover { color: var(--brass-light); }
 footer.site-footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-.footer-bottom { padding-top: 24px; font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.7; }
+.footer-bottom { padding-top: 24px; font-size: 0.8rem; color: rgba(255,255,255,0.68); line-height: 1.7; }
 @media (max-width: 780px) { .footer-top { grid-template-columns: 1fr; } }
 
 /* ---------- Headshot ---------- */
@@ -563,6 +577,12 @@ footer.site-footer ul { list-style: none; padding: 0; margin: 0; display: flex; 
 }
 .faq-item[open] summary::after { content: "\2212"; }
 .faq-item p { margin: 14px 0 0; color: var(--stone); }
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .review-track, nav.primary-nav, .btn { transition: none; }
+}
 
 /* ---------- Utility ---------- */
 .center { text-align: center; }
