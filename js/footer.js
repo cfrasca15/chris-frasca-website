@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
       <div class="footer-bottom">
         Medicare has neither reviewed nor endorsed this information. Not connected with or endorsed by the United States government or the federal Medicare program. National Producer Number: 0L86243.
-        <br>We do not offer every plan available in your area. Any information we provide is limited to the plans we do offer in your area. Contact Medicare.gov or 1-800-MEDICARE for information on all of your options.
+        <br>We do not offer every plan available in your area. Currently we represent 10 organizations which offer 62 products in your area. Please contact Medicare.gov, 1-800-MEDICARE, or your local State Health Insurance Program (SHIP) to get information on all of your options.
         <br><br>&copy; <span id="year"></span> Chris Frasca Insurance Services. All rights reserved.
       </div>
     </div>
