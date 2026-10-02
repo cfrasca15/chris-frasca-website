@@ -442,14 +442,15 @@ footer.site-footer {
   font-size: 0.9rem;
 }
 footer.site-footer .wrap { }
-.footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,0.12); }
+.footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,0.12); }
 footer.site-footer h4 { color: #fff; font-family: var(--font-body); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
 footer.site-footer p { color: rgba(255,255,255,0.65); }
 footer.site-footer a { color: rgba(255,255,255,0.72); text-decoration: none; }
 footer.site-footer a:hover { color: var(--brass-light); }
 footer.site-footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
 .footer-bottom { padding-top: 24px; font-size: 0.8rem; color: rgba(255,255,255,0.68); line-height: 1.7; }
-@media (max-width: 780px) { .footer-top { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .footer-top { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .footer-top { grid-template-columns: 1fr; } }
 
 /* ---------- Headshot ---------- */
 .headshot {
@@ -590,3 +591,56 @@ footer.site-footer ul { list-style: none; padding: 0; margin: 0; display: flex; 
 .mx-auto { margin-left: auto; margin-right: auto; }
 .section-head { max-width: 640px; margin-bottom: 8px; }
 .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+
+/* ---------- Seasonal enrollment banner (js/banner.js) ---------- */
+.aep-banner {
+  background: var(--brass-light);
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+.aep-banner .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: relative;
+}
+.aep-banner p { margin: 0; text-align: center; color: var(--ink); }
+.aep-banner a { color: var(--ink); font-weight: 700; text-decoration: underline; white-space: nowrap; }
+.aep-banner a:hover { text-decoration-thickness: 2px; }
+.aep-banner-close {
+  background: none;
+  border: 0;
+  color: var(--ink);
+  font-size: 1.4rem;
+  line-height: 1;
+  padding: 4px 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+@media (max-width: 640px) {
+  .aep-banner { font-size: 0.88rem; }
+  .aep-banner .wrap { justify-content: space-between; }
+  .aep-banner p { text-align: left; }
+}
+
+/* ---------- "Have these handy" checklist + enroll-online note ---------- */
+.check-list { list-style: none; padding: 0; margin: 0; color: var(--stone); }
+.check-list li { position: relative; padding-left: 28px; margin-bottom: 10px; }
+.check-list li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.45em;
+  width: 11px;
+  height: 6px;
+  border-left: 2px solid var(--brass-btn);
+  border-bottom: 2px solid var(--brass-btn);
+  transform: rotate(-45deg);
+}
+.fine-print { font-size: 0.85rem; color: var(--stone); max-width: 62ch; }
+.area-links { display: flex; flex-wrap: wrap; gap: 10px 22px; justify-content: center; margin: 18px 0 0; padding: 0; list-style: none; }
+.area-links a { font-weight: 600; }

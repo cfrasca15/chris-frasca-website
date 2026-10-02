@@ -19,6 +19,17 @@ document.addEventListener('DOMContentLoaded', function () {
           </ul>
         </div>
         <div>
+          <h4>Areas</h4>
+          <ul>
+            <li><a href="/medicare-agent-mission-viejo.html">Mission Viejo</a></li>
+            <li><a href="/medicare-agent-laguna-niguel.html">Laguna Niguel</a></li>
+            <li><a href="/medicare-agent-aliso-viejo.html">Aliso Viejo</a></li>
+            <li><a href="/medicare-agent-laguna-hills.html">Laguna Hills</a></li>
+            <li><a href="/medicare-agent-dana-point.html">Dana Point</a></li>
+            <li><a href="/medicare-agent-san-clemente.html">San Clemente</a></li>
+          </ul>
+        </div>
+        <div>
           <h4>Contact</h4>
           <ul>
             <li><a href="tel:9492596744">949-259-6744</a></li>
