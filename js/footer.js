@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
   var el = document.getElementById('site-footer');
   if (!el) return;
+  var orgs = el.getAttribute('data-orgs') || '10';
+  var products = el.getAttribute('data-products') || '62';
   el.innerHTML = `
     <div class="wrap">
       <div class="footer-top">
@@ -27,6 +29,9 @@ document.addEventListener('DOMContentLoaded', function () {
             <li><a href="/medicare-agent-laguna-hills.html">Laguna Hills</a></li>
             <li><a href="/medicare-agent-dana-point.html">Dana Point</a></li>
             <li><a href="/medicare-agent-san-clemente.html">San Clemente</a></li>
+            <li><a href="/medicare-agent-newport-beach.html">Newport Beach</a></li>
+            <li><a href="/medicare-agent-irvine.html">Irvine</a></li>
+            <li><a href="/medicare-agent-costa-mesa.html">Costa Mesa</a></li>
           </ul>
         </div>
         <div>
@@ -39,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
       <div class="footer-bottom">
         Medicare has neither reviewed nor endorsed this information. Not connected with or endorsed by the United States government or the federal Medicare program. California Insurance License No. 0L86243.
-        <br>We do not offer every plan available in your area. Currently we represent 10 organizations which offer 62 products in your area. Please contact Medicare.gov, 1-800-MEDICARE, or your local State Health Insurance Program (SHIP) to get information on all of your options.
+        <br>We do not offer every plan available in your area. Currently we represent ${orgs} organizations which offer ${products} products in your area. Please contact Medicare.gov, 1-800-MEDICARE, or your local State Health Insurance Program (SHIP) to get information on all of your options.
         <br><br>&copy; <span id="year"></span> Chris Frasca Insurance Services. All rights reserved.
       </div>
     </div>
