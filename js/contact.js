@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!form) return;
   const statusEl = document.getElementById('contact-status');
   const submitBtn = form.querySelector('button[type="submit"]');
+  const startedAt = Date.now();
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const res = await fetch('/.netlify/functions/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify({ ...data, startedAt })
       });
       if (!res.ok) throw new Error('Request failed');
 
