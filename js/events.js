@@ -8,6 +8,82 @@ function formatDate(iso) {
   };
 }
 
+const SITE_URL = 'https://chrisfrascainsurance.com';
+
+// UTC offset (e.g. "-07:00") for Pacific time at a given local date/time, so
+// start times are right on both sides of the daylight-saving change.
+function pacificOffset(isoDate, hour, minute) {
+  const [y, m, d] = isoDate.split('-').map(Number);
+  const guess = new Date(Date.UTC(y, m - 1, d, hour + 8, minute));
+  const part = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', timeZoneName: 'shortOffset' })
+    .formatToParts(guess).find(p => p.type === 'timeZoneName');
+  const match = part && part.value.match(/GMT([+-])(\d{1,2})(?::(\d{2}))?/);
+  if (!match) return '-08:00';
+  return `${match[1]}${match[2].padStart(2, '0')}:${match[3] || '00'}`;
+}
+
+function to24h(hour, minute, meridiem) {
+  let h = Number(hour) % 12;
+  if (/pm/i.test(meridiem)) h += 12;
+  return { h, m: Number(minute) };
+}
+
+function eventToSchema(ev) {
+  const schema = {
+    '@type': 'Event',
+    name: ev.title,
+    description: ev.description,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    isAccessibleForFree: true,
+    organizer: { '@type': 'Person', name: 'Chris Frasca', url: SITE_URL + '/' }
+  };
+
+  const t = String(ev.time || '').match(/(\d{1,2}):(\d{2})\s*(AM|PM)\s*[–-]\s*(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+  if (t) {
+    const s = to24h(t[1], t[2], t[3]);
+    const e = to24h(t[4], t[5], t[6]);
+    const pad = n => String(n).padStart(2, '0');
+    const offset = pacificOffset(ev.date, s.h, s.m);
+    schema.startDate = `${ev.date}T${pad(s.h)}:${pad(s.m)}:00${offset}`;
+    schema.endDate = `${ev.date}T${pad(e.h)}:${pad(e.m)}:00${offset}`;
+  } else {
+    schema.startDate = ev.date;
+  }
+
+  const a = String(ev.address || '').match(/^(.+?),\s*(.+?),\s*([A-Z]{2})\s+(\d{5})/);
+  schema.location = {
+    '@type': 'Place',
+    name: ev.location,
+    address: a
+      ? { '@type': 'PostalAddress', streetAddress: a[1], addressLocality: a[2], addressRegion: a[3], postalCode: a[4], addressCountry: 'US' }
+      : ev.address
+  };
+
+  // Only advertise a way to register once there is one.
+  if (!ev.registrationOpensSoon) {
+    schema.offers = {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      url: ev.registerUrl || SITE_URL + '/events.html#rsvp'
+    };
+  }
+  return schema;
+}
+
+function injectEventSchema(events) {
+  const old = document.getElementById('event-schema');
+  if (old) old.remove();
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.id = 'event-schema';
+  script.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': events.map(eventToSchema) })
+    .replace(/</g, '\\u003c');
+  document.head.appendChild(script);
+}
+
 function renderEvents() {
   const list = document.getElementById('events-list');
   const select = document.getElementById('rsvp-event');
@@ -19,6 +95,8 @@ function renderEvents() {
 
   if (upcoming.length === 0) {
     list.innerHTML = '<p class="lede">No events are scheduled right now — check back soon, or contact me directly for one-on-one help.</p>';
+  } else {
+    injectEventSchema(upcoming);
   }
 
   upcoming.forEach(ev => {
