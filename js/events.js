@@ -73,6 +73,7 @@ function wireRsvpForm() {
   if (!form) return;
   const statusEl = document.getElementById('rsvp-status');
   const submitBtn = form.querySelector('button[type="submit"]');
+  const startedAt = Date.now();
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -89,6 +90,7 @@ function wireRsvpForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...data,
+          startedAt,
           eventTitle: selectedEvent ? selectedEvent.title : data.eventId,
           eventDate: selectedEvent ? selectedEvent.date : '',
           eventTime: selectedEvent ? selectedEvent.time : '',

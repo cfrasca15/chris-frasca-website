@@ -8,6 +8,12 @@
 
 const REMINDER_DAYS_BEFORE = 3;
 
+const escapeHtml = (s) =>
+  String(s ?? '').replace(/[&<>"']/g, (c) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+const oneLine = (s) => String(s ?? '').replace(/[\r\n]+/g, ' ').trim();
+
 exports.handler = async () => {
   const {
     AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_NAME,
@@ -45,15 +51,15 @@ exports.handler = async () => {
         body: JSON.stringify({
           from: FROM_EMAIL,
           to: f['Email'],
-          subject: `Reminder: ${f['Event Title']} is coming up`,
+          subject: `Reminder: ${oneLine(f['Event Title'])} is coming up`,
           html: `
             <div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;color:#22282E;">
-              <h2 style="color:#16273D;">See you soon, ${f['First Name']}!</h2>
+              <h2 style="color:#17324A;">See you soon, ${escapeHtml(f['First Name'])}!</h2>
               <p>Just a reminder about your upcoming event:</p>
-              <p style="background:#F7F5F0;padding:16px;border-left:3px solid #B8863C;">
-                <strong>${f['Event Title']}</strong><br>
-                ${f['Event Date']} &middot; ${f['Event Time']}<br>
-                ${f['Event Location']}
+              <p style="background:#F7F5F0;padding:16px;border-left:3px solid #A8763A;">
+                <strong>${escapeHtml(f['Event Title'])}</strong><br>
+                ${escapeHtml(f['Event Date'])} &middot; ${escapeHtml(f['Event Time'])}<br>
+                ${escapeHtml(f['Event Location'])}
               </p>
               <p>Can't make it anymore? Just reply to this email or call 949-259-6744 to let me know.</p>
               <p>See you there,<br><strong>Chris Frasca</strong></p>

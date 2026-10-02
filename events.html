@@ -77,6 +77,10 @@
     <div class="form-card">
       <div id="rsvp-status" class="form-status"></div>
       <form id="rsvp-form">
+        <div class="hp-field" aria-hidden="true">
+          <label for="rsvp-website">Leave this field empty</label>
+          <input type="text" id="rsvp-website" name="website" tabindex="-1" autocomplete="off">
+        </div>
         <div class="field">
           <label for="rsvp-event">Which event?</label>
           <select id="rsvp-event" name="eventId" required>
