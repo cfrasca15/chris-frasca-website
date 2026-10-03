@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       statusEl.textContent = "Thanks — your message is on its way. I'll get back to you personally, usually within a day.";
       statusEl.className = 'form-status show ok';
+      if (window.trackConversion) window.trackConversion('contact');
       form.reset();
     } catch (err) {
       statusEl.textContent = "Something went wrong. Please call or email me directly at 949-259-6744 / chris@chrisfrascainsurance.com.";
