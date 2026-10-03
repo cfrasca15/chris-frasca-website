@@ -12,9 +12,9 @@
 //     reviews base.
 //
 // Environment variables (Netlify > Site settings > Environment variables):
-//   LEADS_AIRTABLE_TOKEN     token with access to ONLY the leads base
-//   LEADS_AIRTABLE_BASE_ID   the leads base ID (starts with "app...")
-//   LEADS_AIRTABLE_TABLE     table name, defaults to "WebsiteLeads"
+//   WEBSITE_LEADS_AIRTABLE_TOKEN     token with access to ONLY the leads base
+//   WEBSITE_LEADS_BASE_ID   the leads base ID (starts with "app...")
+//   WEBSITE_LEADS_TABLE     table name, defaults to "WebsiteLeads"
 //
 // If the variables are missing, or Airtable fails, this logs and returns false.
 // It never throws, so a lead is never lost because of the log.
@@ -22,17 +22,17 @@
 const CLEAN = (s, max) => String(s ?? '').replace(/[\r\n]+/g, ' ').trim().slice(0, max);
 
 async function logLead({ source, firstName, lastName, phone, email, detail, consentRecord }) {
-  const { LEADS_AIRTABLE_TOKEN, LEADS_AIRTABLE_BASE_ID, LEADS_AIRTABLE_TABLE } = process.env;
-  if (!LEADS_AIRTABLE_TOKEN || !LEADS_AIRTABLE_BASE_ID) return false;
+  const { WEBSITE_LEADS_AIRTABLE_TOKEN, WEBSITE_LEADS_BASE_ID, WEBSITE_LEADS_TABLE } = process.env;
+  if (!WEBSITE_LEADS_AIRTABLE_TOKEN || !WEBSITE_LEADS_BASE_ID) return false;
 
-  const table = LEADS_AIRTABLE_TABLE || 'WebsiteLeads';
+  const table = WEBSITE_LEADS_TABLE || 'WebsiteLeads';
   try {
     const res = await fetch(
-      `https://api.airtable.com/v0/${LEADS_AIRTABLE_BASE_ID}/${encodeURIComponent(table)}`,
+      `https://api.airtable.com/v0/${WEBSITE_LEADS_BASE_ID}/${encodeURIComponent(table)}`,
       {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${LEADS_AIRTABLE_TOKEN}`,
+          'Authorization': `Bearer ${WEBSITE_LEADS_AIRTABLE_TOKEN}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
