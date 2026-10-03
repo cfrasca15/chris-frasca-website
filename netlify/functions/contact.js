@@ -46,7 +46,9 @@ exports.handler = async (event) => {
   // Honeypot filled in: pretend it worked so the bot doesn't adapt, but send nothing.
   if (website) return json(200, { ok: true });
 
-  if (!firstName || !lastName || !email) {
+  // A name and at least one way to reach the person (the call-back form on the
+  // landing page asks for a phone number and treats email as optional).
+  if (!firstName || (!email && !phone)) {
     return { statusCode: 400, body: 'Missing required fields' };
   }
 
@@ -58,8 +60,9 @@ exports.handler = async (event) => {
   const consentRecord = `Permission to contact: YES (checkbox, wording ptc-v1) at ${new Date().toISOString()}`;
 
   if (
-    !EMAIL_RE.test(email) || email.length > 254 ||
-    String(firstName).length > 80 || String(lastName).length > 80 ||
+    (email && (!EMAIL_RE.test(email) || String(email).length > 254)) ||
+    (phone && String(phone).replace(/\D/g, '').length < 7) ||
+    String(firstName).length > 80 || String(lastName ?? '').length > 80 ||
     String(phone ?? '').length > 40 || String(topic ?? '').length > 120 ||
     String(message ?? '').length > 4000
   ) {
@@ -72,14 +75,14 @@ exports.handler = async (event) => {
   }
 
   // Link-stuffed messages and links in name/topic fields are almost always spam.
-  if (countLinks(message) >= 2 || countLinks(`${firstName} ${lastName} ${topic}`) > 0) {
+  if (countLinks(message) >= 2 || countLinks(`${firstName} ${lastName ?? ''} ${topic}`) > 0) {
     return json(200, { ok: true });
   }
 
   const safe = {
     firstName: escapeHtml(firstName),
-    lastName: escapeHtml(lastName),
-    email: escapeHtml(email),
+    lastName: escapeHtml(lastName || ''),
+    email: escapeHtml(email || 'n/a'),
     phone: escapeHtml(phone || 'n/a'),
     topic: escapeHtml(topic || 'n/a'),
     message: escapeHtml(message || '').replace(/\n/g, '<br>')
@@ -94,8 +97,8 @@ exports.handler = async (event) => {
       body: JSON.stringify({
         from: FROM_EMAIL,
         to: OWNER_EMAIL,
-        reply_to: email,
-        subject: `Website contact: ${oneLine(firstName)} ${oneLine(lastName)} — ${oneLine(topic) || 'General'}`,
+        ...(email ? { reply_to: email } : {}),
+        subject: `Website contact: ${oneLine(firstName)} ${oneLine(lastName)} — ${oneLine(topic) || 'General'}`.replace('  ', ' '),
         html: `
           <p><strong>${safe.firstName} ${safe.lastName}</strong> sent a message via the website.</p>
           <ul>
@@ -113,7 +116,7 @@ exports.handler = async (event) => {
       return { statusCode: 502, body: 'Email send failed' };
     }
 
-    const replyRes = await fetch('https://api.resend.com/emails', {
+    const replyRes = !email ? { ok: true } : await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({

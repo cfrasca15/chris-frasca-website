@@ -54,8 +54,55 @@
       <p class="lede mx-auto" id="aep-lede" style="margin-left:auto;margin-right:auto;">Medicare's Annual Enrollment Period runs October 15 through December 7 &mdash; your yearly chance to switch plans, no matter why. If your plan is being discontinued, your doctor left the network, or your PPO is getting cut back, this is the time to fix it. Let's figure out your options, free, in about 15 minutes.</p>
       <div class="hero-cta-row" style="justify-content:center;margin-top:18px;">
         <a href="tel:9492596744" class="btn btn-primary">Call 949-259-6744</a>
-        <a href="bookings.html" class="btn btn-ghost">Book a Free Review</a>
+        <a href="#callback" class="btn btn-ghost">Request a Call Back</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight section-dim" id="callback">
+  <div class="wrap" style="max-width:640px;">
+    <div class="section-head center">
+      <span class="eyebrow" style="justify-content:center;">Prefer a call back?</span>
+      <h2>Leave your number and I'll call you</h2>
+      <p class="lede mx-auto" style="margin-left:auto;margin-right:auto;">No obligation and no cost. Tell me a good time and I'll reach out.</p>
+    </div>
+    <div class="form-card">
+      <form id="callback-form">
+        <div class="hp-field" aria-hidden="true">
+          <label for="cb-website">Leave this field empty</label>
+          <input type="text" id="cb-website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="cb-first">First name</label>
+          <input type="text" id="cb-first" name="firstName" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+          <label for="cb-phone">Phone number</label>
+          <input type="tel" id="cb-phone" name="phone" autocomplete="tel" inputmode="tel" minlength="10" required>
+        </div>
+        <div class="field">
+          <label for="cb-email">Email <span class="hint">(optional)</span></label>
+          <input type="email" id="cb-email" name="email" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="cb-time">Best time to call <span class="hint">(optional)</span></label>
+          <select id="cb-time" name="bestTime">
+            <option>Anytime</option>
+            <option>Morning</option>
+            <option>Afternoon</option>
+            <option>Evening</option>
+          </select>
+        </div>
+        <div class="field consent-field">
+          <label class="consent-label" for="cb-consent">
+            <input type="checkbox" id="cb-consent" name="consent" value="yes" required>
+            <span>By checking this box and submitting this form, I give Chris Frasca Insurance Services permission to contact me by phone call, text message, and email about Medicare plans and my request. A licensed insurance agent will contact me. Consent is not required to receive services. Message frequency varies; message and data rates may apply. Reply STOP to opt out of texts. See the <a href="/privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span>
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Request a call back</button>
+        <div id="callback-status" class="form-status" role="status" aria-live="polite" style="margin-top:16px;"></div>
+      </form>
     </div>
   </div>
 </section>
@@ -163,6 +210,7 @@
 
 <footer class="site-footer" id="site-footer"></footer>
 <script src="js/footer.js"></script>
+<script src="js/callback.js"></script>
 <script>
 // Keeps the page accurate for the three stages of Annual Enrollment.
 // The HTML default is neutral wording that is true any time of year.
