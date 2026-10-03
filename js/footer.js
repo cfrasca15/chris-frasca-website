@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
           <h4>Site</h4>
           <ul>
             <li><a href="/index.html">Home</a></li>
+            <li><a href="/about.html">About Chris</a></li>
             <li><a href="/medicare-help.html">Medicare Help</a></li>
             <li><a href="/events.html">Turning 65 Events</a></li>
             <li><a href="/bookings.html">Book a Consultation</a></li>
