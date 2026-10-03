@@ -677,3 +677,36 @@ footer.site-footer ul { list-style: none; padding: 0; margin: 0; display: flex; 
   .cookie-banner { flex-direction: column; align-items: stretch; gap: 12px; }
   .cookie-actions .btn { flex: 1; }
 }
+
+/* ---------- Annual Enrollment timeline (js/timeline.js) ---------- */
+.aep-timeline { position: relative; max-width: 900px; margin: 0 auto; padding-top: 52px; }
+.tl-line { position: absolute; top: 62px; left: 12.5%; right: 12.5%; height: 4px; background: var(--line); border-radius: 2px; }
+.tl-aep { position: absolute; top: 0; bottom: 0; left: 33.333%; width: 33.333%; background: var(--brass-btn); border-radius: 2px; }
+.tl-items { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
+.tl-items li { position: relative; text-align: center; padding: 34px 6px 0; font-size: 0.92rem; line-height: 1.4; color: var(--stone); }
+.tl-items li strong { display: block; font-family: var(--font-display); font-size: 1.15rem; color: var(--ink); margin-bottom: 2px; }
+.tl-dot { position: absolute; top: 0; left: 50%; width: 22px; height: 22px; margin-left: -11px; border-radius: 50%; background: var(--white); border: 3px solid var(--ink); }
+.tl-items li.is-aep .tl-dot { background: var(--brass-btn); border-color: var(--ink); }
+.tl-today { position: absolute; top: 0; transform: translateX(-50%); background: var(--ink); color: var(--white); font-size: 0.8rem; font-weight: 700; padding: 5px 10px; border-radius: 6px; white-space: nowrap; }
+.tl-today::after { content: ""; position: absolute; left: 50%; bottom: -6px; margin-left: -6px; border: 6px solid transparent; border-bottom: 0; border-top-color: var(--ink); }
+.tl-caption { text-align: center; margin: 28px auto 0; padding: 12px 18px; max-width: 640px; background: #FBF1D6; border: 1px solid var(--brass-light); border-radius: var(--radius); font-weight: 600; color: var(--ink); }
+@media (max-width: 560px) {
+  .tl-items li { font-size: 0.78rem; padding-left: 2px; padding-right: 2px; }
+  .tl-items li strong { font-size: 1rem; }
+}
+
+/* ---------- Data tables on guide pages ---------- */
+.data-table { width: 100%; border-collapse: collapse; margin: 16px 0 8px; font-size: 0.98rem; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.data-table th, .data-table td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.data-table thead th { background: var(--paper-dim); color: var(--ink); font-size: 0.9rem; }
+.data-table tr:last-child td { border-bottom: 0; }
+.data-table td:not(:first-child), .data-table th:not(:first-child) { white-space: nowrap; }
+.table-scroll { overflow-x: auto; }
+.source-list { padding-left: 20px; color: var(--stone); font-size: 0.95rem; line-height: 1.7; }
+.source-list a { text-decoration: underline; }
+.guide { max-width: 800px; }
+.guide h2 { margin-top: 44px; }
+.guide .answer-box { background: var(--paper-dim); border-left: 4px solid var(--brass); padding: 18px 22px; border-radius: 0; margin: 24px 0; }
+.guide .answer-box p { margin: 0; }
+.guide ul.plain { color: var(--stone); padding-left: 20px; }
+.guide ul.plain li { margin-bottom: 8px; }
