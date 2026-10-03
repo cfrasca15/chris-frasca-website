@@ -73,7 +73,7 @@ const signature = `
       <table role="presentation" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td class="sig-cell" valign="middle" style="padding-right:16px;">
-            <img src="${SITE}/images/chris-headshot.jpg" width="96" height="96" alt="Chris Frasca"
+            <img src="${SITE}/images/chris-headshot-square.jpg" width="96" height="96" alt="Chris Frasca"
                  style="display:block;width:96px;height:96px;border-radius:14px;object-fit:cover;border:0;">
           </td>
           <td class="sig-cell sig-name" valign="middle" style="padding-right:16px;border-right:1px solid ${COLORS.line};">
