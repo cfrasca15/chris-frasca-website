@@ -710,3 +710,10 @@ footer.site-footer ul { list-style: none; padding: 0; margin: 0; display: flex; 
 .guide .answer-box p { margin: 0; }
 .guide ul.plain { color: var(--stone); padding-left: 20px; }
 .guide ul.plain li { margin-bottom: 8px; }
+
+/* ---------- About page photo pair ---------- */
+.photo-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin: 8px 0 0; }
+.photo-pair figure { margin: 0; }
+.photo-pair img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); }
+.photo-pair figcaption { margin-top: 10px; font-size: 0.95rem; color: var(--stone); text-align: center; }
+@media (max-width: 640px) { .photo-pair { grid-template-columns: 1fr; } }
