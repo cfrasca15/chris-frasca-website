@@ -21,6 +21,7 @@ const MAX_AGE_MS = 24 * 60 * 60 * 1000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const EVENT_ID_RE = /^[a-z0-9-]{1,80}$/i;
 const { renderEmail, eventCard } = require('./lib/email-template');
+const { logLead } = require('./lib/lead-log');
 
 const escapeHtml = (s) =>
   String(s ?? '').replace(/[&<>"']/g, (c) => (
@@ -109,6 +110,14 @@ exports.handler = async (event) => {
     AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_NAME,
     RESEND_API_KEY, FROM_EMAIL, OWNER_EMAIL
   } = process.env;
+
+  // Minimal lead record for the CRM (no free-text notes).
+  await logLead({
+    source: 'rsvp',
+    firstName, lastName, phone, email,
+    detail: `${oneLine(eventTitle || eventId)} on ${oneLine(eventDate)}, ${oneLine(guests || '1')} attending`,
+    consentRecord
+  });
 
   // 1. Save to Airtable
   try {

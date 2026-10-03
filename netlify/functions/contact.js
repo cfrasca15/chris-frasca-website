@@ -12,6 +12,7 @@
 
 const MIN_FILL_MS = 3000;
 const { renderEmail } = require('./lib/email-template');
+const { logLead } = require('./lib/lead-log');
 const MAX_AGE_MS = 24 * 60 * 60 * 1000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -87,6 +88,17 @@ exports.handler = async (event) => {
     topic: escapeHtml(topic || 'n/a'),
     message: escapeHtml(message || '').replace(/\n/g, '<br>')
   };
+
+  // Save a minimal record for the CRM to pull in. Free-text messages are not
+  // stored there; only the call-back form's fixed "best time" choice is.
+  const isCallback = /^call-back/i.test(String(topic ?? ''));
+  const bestTime = (String(message ?? '').match(/^Best time to call: (Anytime|Morning|Afternoon|Evening)$/) || [])[1];
+  await logLead({
+    source: isCallback ? 'callback' : 'contact',
+    firstName, lastName, phone, email,
+    detail: isCallback ? (bestTime ? `Best time to call: ${bestTime}` : '') : topic,
+    consentRecord
+  });
 
   const { RESEND_API_KEY, FROM_EMAIL, OWNER_EMAIL } = process.env;
 
