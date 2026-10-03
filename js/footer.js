@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <li><a href="/events.html">Turning 65 Events</a></li>
             <li><a href="/bookings.html">Book a Consultation</a></li>
             <li><a href="/contact.html">Contact</a></li>
+            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
           </ul>
         </div>
         <div>

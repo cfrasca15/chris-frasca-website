@@ -51,7 +51,7 @@ exports.handler = async (event) => {
   const {
     firstName, lastName, email, phone, guests, notes,
     eventId, eventTitle, eventDate, eventTime, eventLocation, eventAddress,
-    website, startedAt
+    consent, website, startedAt
   } = data;
 
   // Honeypot filled in: pretend it worked so the bot doesn't adapt, but do nothing.
@@ -60,6 +60,13 @@ exports.handler = async (event) => {
   if (!firstName || !lastName || !email || !eventId) {
     return { statusCode: 400, body: 'Missing required fields' };
   }
+
+  // Permission to contact is required; keep a record of when it was given.
+  const consented = consent === 'yes' || consent === true;
+  if (!consented) {
+    return { statusCode: 400, body: 'Permission to contact is required' };
+  }
+  const consentRecord = `Permission to contact: YES (checkbox, wording ptc-v1) at ${new Date().toISOString()}`;
 
   if (
     !EMAIL_RE.test(email) || tooLong(email, 254) ||
@@ -189,6 +196,7 @@ exports.handler = async (event) => {
             <li>Phone: ${safe.phone}</li>
             <li>Guests: ${safe.guests}</li>
             <li>Notes: ${safe.notes}</li>
+            <li>${consentRecord}</li>
           </ul>
         `
       })

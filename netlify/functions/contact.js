@@ -40,7 +40,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: 'Invalid JSON' };
   }
 
-  const { firstName, lastName, email, phone, topic, message, website, startedAt } = data;
+  const { firstName, lastName, email, phone, topic, message, consent, website, startedAt } = data;
 
   // Honeypot filled in: pretend it worked so the bot doesn't adapt, but send nothing.
   if (website) return json(200, { ok: true });
@@ -48,6 +48,13 @@ exports.handler = async (event) => {
   if (!firstName || !lastName || !email) {
     return { statusCode: 400, body: 'Missing required fields' };
   }
+
+  // Permission to contact is required; keep a record of when it was given.
+  const consented = consent === 'yes' || consent === true;
+  if (!consented) {
+    return { statusCode: 400, body: 'Permission to contact is required' };
+  }
+  const consentRecord = `Permission to contact: YES (checkbox, wording ptc-v1) at ${new Date().toISOString()}`;
 
   if (
     !EMAIL_RE.test(email) || email.length > 254 ||
@@ -94,6 +101,7 @@ exports.handler = async (event) => {
             <li>Email: ${safe.email}</li>
             <li>Phone: ${safe.phone}</li>
             <li>Topic: ${safe.topic}</li>
+            <li>${consentRecord}</li>
           </ul>
           <p>${safe.message}</p>
         `

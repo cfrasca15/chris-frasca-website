@@ -644,3 +644,8 @@ footer.site-footer ul { list-style: none; padding: 0; margin: 0; display: flex; 
 .fine-print { font-size: 0.85rem; color: var(--stone); max-width: 62ch; }
 .area-links { display: flex; flex-wrap: wrap; gap: 10px 22px; justify-content: center; margin: 18px 0 0; padding: 0; list-style: none; }
 .area-links a { font-weight: 600; }
+
+/* ---------- Permission-to-contact checkbox ---------- */
+.consent-label { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; font-size: 0.88rem; line-height: 1.5; color: var(--stone); cursor: pointer; }
+.consent-label input[type="checkbox"] { width: 20px; height: 20px; margin-top: 2px; flex-shrink: 0; accent-color: var(--brass-btn); }
+.consent-label a { text-decoration: underline; }
