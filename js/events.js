@@ -197,10 +197,12 @@ function wireRsvpForm() {
 
       statusEl.textContent = "You're all set! A confirmation email is on its way, and I'll send you a reminder before the event.";
       statusEl.className = 'form-status show ok';
+      statusEl.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
       form.reset();
     } catch (err) {
       statusEl.textContent = "Something went wrong sending your RSVP. Please call or email me directly at 949-259-6744 / chris@chrisfrascainsurance.com.";
       statusEl.className = 'form-status show err';
+      statusEl.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = 'RSVP Now';
