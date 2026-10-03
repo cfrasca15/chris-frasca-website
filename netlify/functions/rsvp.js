@@ -20,6 +20,7 @@ const MIN_FILL_MS = 3000;
 const MAX_AGE_MS = 24 * 60 * 60 * 1000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const EVENT_ID_RE = /^[a-z0-9-]{1,80}$/i;
+const { renderEmail, eventCard } = require('./lib/email-template');
 
 const escapeHtml = (s) =>
   String(s ?? '').replace(/[&<>"']/g, (c) => (
@@ -155,19 +156,16 @@ exports.handler = async (event) => {
         from: FROM_EMAIL,
         to: email,
         subject: `You're confirmed: ${oneLine(eventTitle || eventId)}`,
-        html: `
-          <div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;color:#22282E;">
-            <h2 style="color:#17324A;">You're all set, ${safe.firstName}!</h2>
-            <p>You're confirmed for:</p>
-            <p style="background:#F7F5F0;padding:16px;border-left:3px solid #A8763A;">
-              <strong>${safe.eventTitle}</strong><br>
-              ${safe.eventDate} &middot; ${safe.eventTime}<br>
-              ${safe.eventLocation}${eventAddress ? '<br>' + safe.eventAddress : ''}
-            </p>
-            <p>I'll send you a reminder a few days before the event. If your plans change, just reply to this email or call me at 949-259-6744.</p>
-            <p>Looking forward to seeing you,<br><strong>Chris Frasca</strong><br>Chris Frasca Insurance Services</p>
-          </div>
-        `
+        html: renderEmail({
+          preheader: `You're confirmed for ${oneLine(eventTitle || eventId)}.`,
+          heading: `You're all set, ${oneLine(firstName)}!`,
+          bodyHtml: `
+            <p style="margin:0 0 4px;">You're confirmed for:</p>
+            ${eventCard({ title: eventTitle || eventId, date: eventDate, time: eventTime, location: eventLocation, address: eventAddress })}
+            <p style="margin:0 0 14px;">I'll send you a reminder a few days before the event. If your plans change, just reply to this email or call me at <a href="tel:9492596744" style="color:#17324A;font-weight:bold;">949-259-6744</a>.</p>
+            <p style="margin:0 0 14px;">Looking forward to seeing you!</p>
+          `
+        })
       })
     });
     if (!confirmRes.ok) {

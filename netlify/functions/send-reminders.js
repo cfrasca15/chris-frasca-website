@@ -7,6 +7,7 @@
 // Uses the same AIRTABLE_* and RESEND_* environment variables as rsvp.js.
 
 const REMINDER_DAYS_BEFORE = 3;
+const { renderEmail, eventCard } = require('./lib/email-template');
 
 const escapeHtml = (s) =>
   String(s ?? '').replace(/[&<>"']/g, (c) => (
@@ -52,19 +53,16 @@ exports.handler = async () => {
           from: FROM_EMAIL,
           to: f['Email'],
           subject: `Reminder: ${oneLine(f['Event Title'])} is coming up`,
-          html: `
-            <div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;color:#22282E;">
-              <h2 style="color:#17324A;">See you soon, ${escapeHtml(f['First Name'])}!</h2>
-              <p>Just a reminder about your upcoming event:</p>
-              <p style="background:#F7F5F0;padding:16px;border-left:3px solid #A8763A;">
-                <strong>${escapeHtml(f['Event Title'])}</strong><br>
-                ${escapeHtml(f['Event Date'])} &middot; ${escapeHtml(f['Event Time'])}<br>
-                ${escapeHtml(f['Event Location'])}
-              </p>
-              <p>Can't make it anymore? Just reply to this email or call 949-259-6744 to let me know.</p>
-              <p>See you there,<br><strong>Chris Frasca</strong></p>
-            </div>
-          `
+          html: renderEmail({
+            preheader: `A reminder about ${oneLine(f['Event Title'])}.`,
+            heading: `See you soon, ${oneLine(f['First Name'])}!`,
+            bodyHtml: `
+              <p style="margin:0 0 4px;">Just a reminder about your upcoming event:</p>
+              ${eventCard({ title: f['Event Title'], date: f['Event Date'], time: f['Event Time'], location: f['Event Location'] })}
+              <p style="margin:0 0 14px;">Can't make it anymore? Just reply to this email or call <a href="tel:9492596744" style="color:#17324A;font-weight:bold;">949-259-6744</a> to let me know.</p>
+              <p style="margin:0 0 14px;">See you there!</p>
+            `
+          })
         })
       });
 

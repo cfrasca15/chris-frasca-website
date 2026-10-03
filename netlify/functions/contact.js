@@ -11,6 +11,7 @@
 //   - All user input is HTML-escaped before it goes into an email.
 
 const MIN_FILL_MS = 3000;
+const { renderEmail } = require('./lib/email-template');
 const MAX_AGE_MS = 24 * 60 * 60 * 1000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -119,13 +120,14 @@ exports.handler = async (event) => {
         from: FROM_EMAIL,
         to: email,
         subject: `Thanks for reaching out, ${oneLine(firstName)}`,
-        html: `
-          <div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;color:#22282E;">
-            <p>Hi ${safe.firstName},</p>
-            <p>Thanks for your message — I'll get back to you personally, usually within a day. If it's urgent, call me directly at 949-259-6744.</p>
-            <p>Chris Frasca<br>Chris Frasca Insurance Services</p>
-          </div>
-        `
+        html: renderEmail({
+          preheader: "Thanks for reaching out. I'll get back to you personally, usually within a day.",
+          heading: `Thanks for reaching out, ${oneLine(firstName)}`,
+          bodyHtml: `
+            <p style="margin:0 0 14px;">I received your message and I'll get back to you personally, usually within a day.</p>
+            <p style="margin:0 0 14px;">If it's urgent, call me directly at <a href="tel:9492596744" style="color:#17324A;font-weight:bold;">949-259-6744</a>. If you'd rather pick a time that works for you, you can book a free consultation below.</p>
+          `
+        })
       })
     });
     if (!replyRes.ok) {
