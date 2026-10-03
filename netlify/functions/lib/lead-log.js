@@ -14,7 +14,7 @@
 // Environment variables (Netlify > Site settings > Environment variables):
 //   LEADS_AIRTABLE_TOKEN     token with access to ONLY the leads base
 //   LEADS_AIRTABLE_BASE_ID   the leads base ID (starts with "app...")
-//   LEADS_AIRTABLE_TABLE     table name, defaults to "Leads"
+//   LEADS_AIRTABLE_TABLE     table name, defaults to "WebsiteLeads"
 //
 // If the variables are missing, or Airtable fails, this logs and returns false.
 // It never throws, so a lead is never lost because of the log.
@@ -25,7 +25,7 @@ async function logLead({ source, firstName, lastName, phone, email, detail, cons
   const { LEADS_AIRTABLE_TOKEN, LEADS_AIRTABLE_BASE_ID, LEADS_AIRTABLE_TABLE } = process.env;
   if (!LEADS_AIRTABLE_TOKEN || !LEADS_AIRTABLE_BASE_ID) return false;
 
-  const table = LEADS_AIRTABLE_TABLE || 'Leads';
+  const table = LEADS_AIRTABLE_TABLE || 'WebsiteLeads';
   try {
     const res = await fetch(
       `https://api.airtable.com/v0/${LEADS_AIRTABLE_BASE_ID}/${encodeURIComponent(table)}`,
