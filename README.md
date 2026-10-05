@@ -8,12 +8,30 @@ reminder emails. Everything runs on Netlify's free/low-cost tier on your own dom
 
 ## 1. What you're getting
 
-- **4 pages**: Home, Medicare Help, Turning 65 Events (with RSVP), Contact
-- **RSVP system**: attendees fill out a form → get an instant confirmation email →
+- **Main pages**: Home, About, Medicare Help, Turning 65 Events (with RSVP), Book a
+  Consultation (Calendly), Contact, Privacy Policy
+- **Landing page for ads**: `plan-changes.html` (date-aware Annual Enrollment text,
+  timeline, call-back form)
+- **Guides**: the 2027 changes in California, the turning-65 enrollment guide, and
+  how to find a local licensed insurance agent. Every fact on them links to its
+  Medicare.gov / CMS / state source.
+- **Local pages**: 17 city pages (`medicare-help-<city>.html`) plus `areas.html`
+- **RSVP system**: attendees fill out a form, get an instant confirmation email, and
   get an automatic reminder email a few days before the event
-- **Contact form**: sends you an email, sends the person a short auto-reply
-- **You edit events yourself** in one file (`js/events-data.js`) — no code changes
+- **Forms**: contact, call-back, and RSVP. Each requires a permission-to-contact
+  checkbox (enforced and recorded server-side), is spam-protected, and saves a
+  minimal lead record for the CRM (see `netlify/functions/lib/lead-log.js`).
+- **Ads and tracking**: `js/tracking.js` loads the Google tag behind a cookie notice.
+  Every page needs it; after regenerating pages, check that all of them still load it.
+- **Review link**: `/review` redirects to the Google review form (`netlify.toml`)
+- **You edit events yourself** in one file (`js/events-data.js`), no code changes
   needed elsewhere
+
+**Marketing wording rules** (from Integrity): never use the word "free" (say "no-cost"),
+say "licensed insurance agent" (not "Medicare agent" or "broker"), "review" (not
+"compare") plans, and "Annual Enrollment" for October 15 to December 7. No carrier
+names. The footer disclaimer, with the organization and product counts, lives in
+`js/footer.js`, the email template, and the email signature.
 
 You do **not** need to touch the `netlify/functions` folder unless you want to
 change how emails are worded.

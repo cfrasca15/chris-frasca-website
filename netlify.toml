@@ -21,3 +21,10 @@
   to = "/medicare-help-:splat"
   status = 301
   force = true
+
+# Short link for review requests (texts, emails, signature, QR code).
+[[redirects]]
+  from = "/review"
+  to = "https://g.page/r/CRUTtGvgRw2HEAE/review"
+  status = 302
+  force = true
