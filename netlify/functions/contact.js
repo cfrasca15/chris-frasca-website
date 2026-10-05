@@ -140,7 +140,7 @@ exports.handler = async (event) => {
           heading: `Thanks for reaching out, ${oneLine(firstName)}`,
           bodyHtml: `
             <p style="margin:0 0 14px;">I received your message and I'll get back to you personally, usually within a day.</p>
-            <p style="margin:0 0 14px;">If it's urgent, call me directly at <a href="tel:9492596744" style="color:#17324A;font-weight:bold;">949-259-6744</a>. If you'd rather pick a time that works for you, you can book a free consultation below.</p>
+            <p style="margin:0 0 14px;">If it's urgent, call me directly at <a href="tel:9492596744" style="color:#17324A;font-weight:bold;">949-259-6744</a>. If you'd rather pick a time that works for you, you can book a no-cost consultation below.</p>
           `
         })
       })

@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <div class="footer-top">
         <div>
           <h4>Chris Frasca Insurance Services</h4>
-          <p style="max-width:38ch;">Free, unbiased Medicare guidance for Orange County and Ventura County. Independent agent, personal service, for life.</p>
+          <p style="max-width:38ch;">No-cost, unbiased Medicare guidance for Orange County and Ventura County. Independent agent, personal service, for life.</p>
         </div>
         <div>
           <h4>Site</h4>
@@ -25,11 +25,11 @@ document.addEventListener('DOMContentLoaded', function () {
         <div>
           <h4>Areas</h4>
           <ul>
-            <li><a href="/medicare-agent-mission-viejo.html">Mission Viejo</a></li>
-            <li><a href="/medicare-agent-newport-beach.html">Newport Beach</a></li>
-            <li><a href="/medicare-agent-irvine.html">Irvine</a></li>
-            <li><a href="/medicare-agent-ventura.html">Ventura</a></li>
-            <li><a href="/medicare-agent-oxnard.html">Oxnard</a></li>
+            <li><a href="/medicare-help-mission-viejo.html">Mission Viejo</a></li>
+            <li><a href="/medicare-help-newport-beach.html">Newport Beach</a></li>
+            <li><a href="/medicare-help-irvine.html">Irvine</a></li>
+            <li><a href="/medicare-help-ventura.html">Ventura</a></li>
+            <li><a href="/medicare-help-oxnard.html">Oxnard</a></li>
             <li><a href="/areas.html">All service areas</a></li>
           </ul>
         </div>

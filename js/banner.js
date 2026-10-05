@@ -23,7 +23,7 @@
   bar.setAttribute('aria-label', 'Annual Enrollment notice');
   bar.innerHTML =
     '<div class="wrap">' +
-      '<p>' + msg + ' <a href="/plan-changes.html">Get a free plan review &rarr;</a></p>' +
+      '<p>' + msg + ' <a href="/plan-changes.html">Get a no-cost plan review &rarr;</a></p>' +
       '<button type="button" class="aep-banner-close" aria-label="Dismiss notice">&times;</button>' +
     '</div>';
   header.parentNode.insertBefore(bar, header.nextSibling);

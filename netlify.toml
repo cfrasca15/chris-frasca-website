@@ -13,3 +13,11 @@
   [headers.values]
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
+
+# The city pages were first published as /medicare-agent-<city>.html and renamed
+# to /medicare-help-<city>.html. Keep any old links and bookmarks working.
+[[redirects]]
+  from = "/medicare-agent-*"
+  to = "/medicare-help-:splat"
+  status = 301
+  force = true
