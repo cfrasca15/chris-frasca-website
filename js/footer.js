@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <li><a href="/about.html">About Chris</a></li>
             <li><a href="/medicare-help.html">Medicare Help</a></li>
             <li><a href="/events.html">Turning 65 Events</a></li>
+            <li><a href="/turning-65-medicare-guide.html">Turning 65 Guide</a></li>
             <li><a href="/bookings.html">Book a Consultation</a></li>
             <li><a href="/contact.html">Contact</a></li>
             <li><a href="/privacy-policy.html">Privacy Policy</a></li>
