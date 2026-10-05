@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="wrap">
       <div class="footer-top">
         <div>
-          <h4>Chris Frasca Insurance Services</h4>
+          <h2 class="footer-h">Chris Frasca Insurance Services</h2>
           <p style="max-width:38ch;">No-cost, unbiased Medicare guidance for Orange County and Ventura County. Independent licensed insurance agent, personal service, for life.</p>
         </div>
         <div>
-          <h4>Site</h4>
+          <h2 class="footer-h">Site</h2>
           <ul>
             <li><a href="/index.html">Home</a></li>
             <li><a href="/about.html">About Chris</a></li>
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
           </ul>
         </div>
         <div>
-          <h4>Areas</h4>
+          <h2 class="footer-h">Areas</h2>
           <ul>
             <li><a href="/medicare-help-mission-viejo.html">Mission Viejo</a></li>
             <li><a href="/medicare-help-newport-beach.html">Newport Beach</a></li>
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
           </ul>
         </div>
         <div>
-          <h4>Contact</h4>
+          <h2 class="footer-h">Contact</h2>
           <ul>
             <li><a href="tel:9492596744">949-259-6744</a></li>
             <li><a href="mailto:chris@chrisfrascainsurance.com">chris@chrisfrascainsurance.com</a></li>

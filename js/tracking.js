@@ -29,10 +29,21 @@
   gtag('js', new Date());
   gtag('config', AW_ID);
 
-  var s = document.createElement('script');
-  s.async = true;
-  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + AW_ID;
-  document.head.appendChild(s);
+  // Load gtag.js once the page has finished loading (and the browser is idle) so it
+  // doesn't compete with the first paint. Events fired before it loads are queued
+  // in dataLayer, so nothing is lost.
+  function loadTag() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + AW_ID;
+    document.head.appendChild(s);
+  }
+  function whenIdle() {
+    if (window.requestIdleCallback) window.requestIdleCallback(loadTag, { timeout: 3000 });
+    else setTimeout(loadTag, 1500);
+  }
+  if (document.readyState === 'complete') whenIdle();
+  else window.addEventListener('load', whenIdle);
 
   window.trackConversion = function (name) {
     var sendTo = CONVERSIONS[name];

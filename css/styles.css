@@ -7,6 +7,13 @@
    text rendering (hurts LCP / Core Web Vitals).
    ============================================ */
 
+/* Fallback fonts sized to match the web fonts, so text doesn't jump when
+   Spectral and Public Sans finish loading. Values come from the font metrics. */
+@font-face { font-family: "Public Sans Fallback"; src: local("Arial"), local("Helvetica Neue"), local("Helvetica"); font-weight: 400 500; size-adjust: 105.24%; ascent-override: 90.27%; descent-override: 21.38%; line-gap-override: 0%; }
+@font-face { font-family: "Public Sans Fallback"; src: local("Arial Bold"), local("Helvetica Neue Bold"), local("Helvetica Bold"); font-weight: 600 700; size-adjust: 105.24%; ascent-override: 90.27%; descent-override: 21.38%; line-gap-override: 0%; }
+@font-face { font-family: "Spectral Fallback"; src: local("Georgia"); font-weight: 400 500; size-adjust: 100.46%; ascent-override: 105.41%; descent-override: 46.09%; line-gap-override: 0%; }
+@font-face { font-family: "Spectral Fallback"; src: local("Georgia Bold"); font-weight: 600 700; size-adjust: 88.18%; ascent-override: 120.10%; descent-override: 52.51%; line-gap-override: 0%; }
+
 :root {
   /* Color tokens */
   --ink:        #17324A;   /* primary navy — headers, nav, hero */
@@ -25,8 +32,8 @@
   --error:      #A3432F;
 
   /* Type */
-  --font-display: 'Spectral', Georgia, serif;
-  --font-body: 'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Spectral', 'Spectral Fallback', Georgia, serif;
+  --font-body: 'Public Sans', 'Public Sans Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
 
   --radius: 10px;
   --max-width: 1120px;
@@ -444,6 +451,7 @@ footer.site-footer {
 footer.site-footer .wrap { }
 .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,0.12); }
 footer.site-footer h4 { color: #fff; font-family: var(--font-body); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+footer.site-footer .footer-h { color: #fff; font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; line-height: 1.15; text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 14px; }
 footer.site-footer p { color: rgba(255,255,255,0.65); }
 footer.site-footer a { color: rgba(255,255,255,0.72); text-decoration: none; }
 footer.site-footer a:hover { color: var(--brass-light); }
@@ -526,19 +534,30 @@ footer.site-footer ul { list-style: none; padding: 0; margin: 0; display: flex; 
 .review-dots {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 2px;
   margin-top: 24px;
 }
 .review-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--line);
+  position: relative;
+  width: 24px;
+  height: 24px;
   border: none;
   padding: 0;
+  background: transparent;
   cursor: pointer;
 }
-.review-dot.active { background: var(--brass); }
+.review-dot::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  background: var(--line);
+}
+.review-dot.active::before { background: var(--brass); }
 
 /* ---------- FAQ ---------- */
 .faq-list {

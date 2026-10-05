@@ -14,7 +14,8 @@
 <meta property="og:image" content="https://chrisfrascainsurance.com/images/chris-headshot.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Public+Sans:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Public+Sans:wght@400;500;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/css/styles.css">
 <script type="application/ld+json">
 {
@@ -68,6 +69,9 @@
     </div>
   </div>
 </header>
+<script src="/js/banner.js"></script>
+
+<main id="main">
 
 <section class="hero">
   <div class="wrap">
@@ -82,7 +86,7 @@
       <p class="agent-id"><strong>Chris Frasca Insurance Services</strong> &middot; California Insurance License No. 0L86243</p>
     </div>
     <div class="hero-figure">
-      <img src="/images/chris-headshot.jpg" alt="Chris Frasca, independent licensed insurance agent" class="headshot" width="260" height="260" fetchpriority="high" decoding="async" style="width:260px;height:260px;">
+      <img src="/images/chris-headshot-sm.jpg" alt="Chris Frasca, independent licensed insurance agent" class="headshot" width="260" height="260" fetchpriority="high" decoding="async" style="width:260px;height:260px;">
     </div>
   </div>
 </section>
@@ -163,10 +167,11 @@
   </div>
 </section>
 
+</main>
+
 <footer class="site-footer" id="site-footer"></footer>
 <script src="/js/footer.js"></script>
 <script src="/js/nav.js"></script>
-<script src="/js/banner.js"></script>
 <script src="/js/tracking.js"></script>
 </body>
 </html>

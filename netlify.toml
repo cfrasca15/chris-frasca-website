@@ -28,3 +28,9 @@
   to = "https://g.page/r/CRUTtGvgRw2HEAE/review"
   status = 302
   force = true
+
+# Images rarely change; let browsers keep them for a week.
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

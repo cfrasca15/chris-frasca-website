@@ -6,8 +6,14 @@
 
   // The mobile menu opens just below the header, whatever height it ends up
   // (the logo text can wrap to extra lines on narrow phones).
+  var pending = false;
   function setHeaderHeight() {
-    document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(function () {
+      pending = false;
+      document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+    });
   }
   setHeaderHeight();
   if (window.ResizeObserver) new ResizeObserver(setHeaderHeight).observe(header);
