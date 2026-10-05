@@ -47,7 +47,7 @@ body {
   font-family: var(--font-body);
   color: var(--charcoal);
   background: var(--paper);
-  font-size: 19px;
+  font-size: 1.1875rem; /* 19px at the default size; scales with the browser text-size setting */
   line-height: 1.68;
   -webkit-font-smoothing: antialiased;
 }
@@ -193,7 +193,7 @@ nav.primary-nav a:hover, nav.primary-nav a.active { color: #fff; border-bottom-c
 .nav-toggle { display: none; }
 
 /* Mid-size screens: tighten the header so every label stays on one line. */
-@media (min-width: 1101px) and (max-width: 1320px) {
+@media (min-width: 1141px) and (max-width: 1320px) {
   .nav-right { gap: 14px; }
   nav.primary-nav { gap: 16px; }
   nav.primary-nav a { font-size: 0.95rem; }
@@ -203,7 +203,7 @@ nav.primary-nav a:hover, nav.primary-nav a.active { color: #fff; border-bottom-c
 }
 
 /* Tablets and phones: collapse the links into the menu button. */
-@media (max-width: 1100px) {
+@media (max-width: 1140px) {
   nav.primary-nav {
     position: fixed;
     inset: var(--header-h, 64px) 0 0 0;
@@ -742,3 +742,70 @@ footer.site-footer ul { list-style: none; padding: 0; margin: 0; display: flex; 
 .agent-id strong { color: var(--white); }
 .hero .center .agent-id, .agent-id.center { text-align: center; }
 .footer-id { margin: 0 0 12px; font-size: 0.95rem; color: var(--white); }
+
+/* ---------- Readability for older readers ----------
+   The smallest text on the site was 12-14px next to 19px body copy. These raise it to
+   about 16px or more. Disclaimers and consent wording are included on purpose. */
+.eyebrow { font-size: 0.9rem; }
+.brand-text small { font-size: 0.7rem; }
+.trust-strip .wrap { font-size: 1rem; }
+.field .hint { font-size: 1rem; }
+.fine-print { font-size: 1rem; }
+.consent-label { font-size: 1rem; line-height: 1.55; }
+.consent-label input[type="checkbox"] { width: 24px; height: 24px; }
+footer.site-footer { font-size: 1rem; }
+footer.site-footer .footer-h { font-size: 0.95rem; }
+.footer-bottom { font-size: 0.95rem; }
+.aep-banner { font-size: 1rem; }
+.cookie-banner p { font-size: 1rem; }
+.cookie-actions .btn { font-size: 1rem; }
+.tl-items li { font-size: 1rem; }
+.tl-today { font-size: 0.9rem; }
+.data-table thead th { font-size: 0.95rem; }
+.review-author { font-size: 1.05rem; }
+.event-meta { font-size: 1rem; }
+.event-date-block .month { font-size: 0.9rem; }
+.event-date-block .year { font-size: 0.85rem; opacity: 0.85; }
+.agent-id { font-size: 1rem; }
+.footer-id { font-size: 1rem; }
+.source-list { font-size: 1rem; }
+.photo-pair figcaption { font-size: 1rem; }
+@media (max-width: 560px) { .tl-items li { font-size: 0.9rem; } }
+
+/* ---------- Mobile call bar (js/callbar.js) ---------- */
+.call-bar { display: none; }
+@media (max-width: 760px) {
+  body.has-callbar { padding-bottom: 76px; }
+  .call-bar {
+    display: block;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 150;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: var(--white);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -4px 16px rgba(23, 50, 74, 0.12);
+  }
+  .call-bar .btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 54px; font-size: 1.15rem; }
+  .call-bar svg { width: 22px; height: 22px; flex-shrink: 0; }
+  body.has-callbar .cookie-banner { bottom: 84px; }
+}
+
+/* Header sizes: full size on wide screens, the earlier tight-width rules in between
+   (so the button never wraps), and larger menu items on phones and tablets. */
+nav.primary-nav a, .nav-cta { white-space: nowrap; }
+@media (min-width: 1321px) {
+  nav.primary-nav a, .nav-cta, .header-phone { font-size: 1rem; }
+}
+@media (min-width: 1141px) and (max-width: 1320px) {
+  .nav-right { gap: 10px; }
+  nav.primary-nav { gap: 12px; }
+  .nav-cta { padding: 12px 16px; }
+}
+@media (max-width: 1140px) {
+  nav.primary-nav a { font-size: 1.2rem; }
+}
+
+/* Long words (like the email address) wrap inside cards instead of widening the page on small phones. */
+.two-col > *, .card-grid > * { min-width: 0; }
+.card, .form-card { overflow-wrap: anywhere; }

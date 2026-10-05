@@ -51,7 +51,7 @@ function initReviewCarousel(root) {
     return;
   }
 
-  const AUTOPLAY_MS = 6000;
+  const AUTOPLAY_MS = 9000;
   let index = 0;
   let timer = null;
 
@@ -95,6 +95,9 @@ function initReviewCarousel(root) {
   root.addEventListener('mouseleave', restartAutoplay);
   root.addEventListener('focusin', stopAutoplay);
   root.addEventListener('focusout', restartAutoplay);
+  // Touch screens have no hover, so stop the auto-advance as soon as someone touches the reviews.
+  root.addEventListener('touchstart', stopAutoplay, { passive: true });
+  root.addEventListener('pointerdown', stopAutoplay);
 
   root.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(index - 1, true);
