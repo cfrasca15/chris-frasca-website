@@ -4,7 +4,7 @@
 // the CRM can pull it in (the CRM reaches out; nothing is pushed into it).
 //
 // Privacy choices:
-//   - Only contact basics and the consent record are stored. Free-text
+//   - Only contact basics and the consent record are stored. Open-ended
 //     messages and notes are NOT stored here (they only go in the email).
 //   - The CRM deletes each row after importing it, so leads don't pile up in
 //     Airtable.

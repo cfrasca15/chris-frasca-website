@@ -89,7 +89,7 @@ exports.handler = async (event) => {
     message: escapeHtml(message || '').replace(/\n/g, '<br>')
   };
 
-  // Save a minimal record for the CRM to pull in. Free-text messages are not
+  // Save a minimal record for the CRM to pull in. Open-ended messages are not
   // stored there; only the call-back form's fixed "best time" choice is.
   const isCallback = /^call-back/i.test(String(topic ?? ''));
   const bestTime = (String(message ?? '').match(/^Best time to call: (Anytime|Morning|Afternoon|Evening)$/) || [])[1];

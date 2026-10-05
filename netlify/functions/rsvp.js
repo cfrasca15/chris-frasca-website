@@ -111,7 +111,7 @@ exports.handler = async (event) => {
     RESEND_API_KEY, FROM_EMAIL, OWNER_EMAIL
   } = process.env;
 
-  // Minimal lead record for the CRM (no free-text notes).
+  // Minimal lead record for the CRM (no open-ended notes).
   await logLead({
     source: 'rsvp',
     firstName, lastName, phone, email,
