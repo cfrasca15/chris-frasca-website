@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <div class="footer-top">
         <div>
           <h4>Chris Frasca Insurance Services</h4>
-          <p style="max-width:38ch;">No-cost, unbiased Medicare guidance for Orange County and Ventura County. Independent agent, personal service, for life.</p>
+          <p style="max-width:38ch;">No-cost, unbiased Medicare guidance for Orange County and Ventura County. Independent licensed insurance agent, personal service, for life.</p>
         </div>
         <div>
           <h4>Site</h4>

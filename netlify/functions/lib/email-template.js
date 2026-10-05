@@ -78,7 +78,7 @@ const signature = `
           </td>
           <td class="sig-cell sig-name" valign="middle" style="padding-right:16px;border-right:1px solid ${COLORS.line};">
             <div style="font-family:${FONT};font-size:20px;font-weight:bold;color:${COLORS.navy};line-height:1.3;">Christopher Frasca</div>
-            <div style="font-family:${FONT};font-size:14px;color:${COLORS.muted};margin-top:4px;">Independent Agent</div>
+            <div style="font-family:${FONT};font-size:14px;color:${COLORS.muted};margin-top:4px;">Independent Licensed Insurance Agent</div>
             <div style="font-family:${FONT};font-size:14px;color:${COLORS.muted};margin-top:2px;">Lic. #: 0L86243</div>
           </td>
           <td class="sig-cell sig-contact" valign="middle" style="padding-left:16px;font-family:${FONT};font-size:13px;line-height:1.9;color:${COLORS.navy};">
