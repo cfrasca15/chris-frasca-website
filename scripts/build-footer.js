@@ -1,9 +1,21 @@
-document.addEventListener('DOMContentLoaded', function () {
-  var el = document.getElementById('site-footer');
-  if (!el) return;
-  var orgs = el.getAttribute('data-orgs') || '10';
-  var products = el.getAttribute('data-products') || '62';
-  el.innerHTML = `
+// Writes the site footer directly into every HTML page (no JavaScript needed), so search
+// engines and AI crawlers that don't run scripts still see the license number, the required
+// disclaimer, and the footer links.
+//
+// To change the footer or the organization/product counts: edit this file, then run
+//     node scripts/build-footer.js
+// from the website folder, and commit the updated pages.
+// (The same disclaimer wording also lives in netlify/functions/lib/email-template.js and the
+// email signature; update those too when the counts change.)
+
+const fs = require('fs');
+const path = require('path');
+
+const ORGS = 10;
+const PRODUCTS = 62;
+const YEAR = new Date().getFullYear();
+
+const FOOTER = `
     <div class="wrap">
       <div class="footer-top">
         <div>
@@ -53,11 +65,24 @@ document.addEventListener('DOMContentLoaded', function () {
       <div class="footer-bottom">
         <p class="footer-id"><strong>Chris Frasca Insurance Services</strong> &middot; California Insurance License No. 0L86243</p>
         Medicare has neither reviewed nor endorsed this information. Not connected with or endorsed by the United States government or the federal Medicare program. California Insurance License No. 0L86243.
-        <br>We do not offer every plan available in your area. Currently we represent ${orgs} organizations which offer ${products} products in your area. Please contact Medicare.gov, 1-800-MEDICARE, or your local State Health Insurance Program (SHIP) to get information on all of your options.
-        <br><br>&copy; <span id="year"></span> Chris Frasca Insurance Services. All rights reserved.
+        <br>We do not offer every plan available in your area. Currently we represent ${ORGS} organizations which offer ${PRODUCTS} products in your area. Please contact Medicare.gov, 1-800-MEDICARE, or your local State Health Insurance Program (SHIP) to get information on all of your options.
+        <br><br>&copy; ${YEAR} Chris Frasca Insurance Services. All rights reserved.
       </div>
     </div>
   `;
-  var y = document.getElementById('year');
-  if (y) y.textContent = new Date().getFullYear();
-});
+
+const root = path.join(__dirname, '..');
+const footerRe = /<footer class="site-footer" id="site-footer">[\s\S]*?<\/footer>/;
+const scriptRe = /\r?\n?<script src="\/?js\/footer\.js"><\/script>/;
+let changed = 0;
+for (const f of fs.readdirSync(root)) {
+  if (!f.endsWith('.html') || f.startsWith('google')) continue;
+  const p = path.join(root, f);
+  let s = fs.readFileSync(p, 'utf8');
+  const nl = s.includes('\r\n') ? '\r\n' : '\n';
+  if (!footerRe.test(s)) { console.log('no footer in', f); continue; }
+  let out = s.replace(footerRe, () => '<footer class="site-footer" id="site-footer">' + FOOTER.replace(/\n/g, nl) + '</footer>');
+  out = out.replace(scriptRe, '');
+  if (out !== s) { fs.writeFileSync(p, out); changed++; }
+}
+console.log('footer written into', changed, 'pages');

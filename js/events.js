@@ -88,6 +88,9 @@ function renderEvents() {
   const list = document.getElementById('events-list');
   const select = document.getElementById('rsvp-event');
   if (!list || !select) return;
+  // The page ships a plain-HTML copy of the events for crawlers that don't run scripts; replace it.
+  const staticEvents = document.getElementById('events-static');
+  if (staticEvents) staticEvents.remove();
 
   const today = new Date(); today.setHours(0,0,0,0);
   const upcoming = EVENTS.filter(e => new Date(e.date + "T00:00:00") >= today)

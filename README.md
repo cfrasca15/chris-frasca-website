@@ -31,7 +31,21 @@ reminder emails. Everything runs on Netlify's free/low-cost tier on your own dom
 say "licensed insurance agent" (not "Medicare agent" or "broker"), "review" (not
 "compare") plans, and "Annual Enrollment" for October 15 to December 7. No carrier
 names. The footer disclaimer, with the organization and product counts, lives in
-`js/footer.js`, the email template, and the email signature.
+`scripts/build-footer.js`, the email template, and the email signature.
+
+## 1b. Keeping the site readable by search engines and AI assistants
+
+Many AI crawlers and Bing don't run JavaScript, so anything that matters is written into the page
+itself:
+
+- **Footer** (links, license number, disclaimer, organization and product counts): edit
+  `scripts/build-footer.js`, then run `node scripts/build-footer.js` and commit the pages.
+- **Workshop list and Event data** on `events.html`: after editing `js/events-data.js` (and again once an
+  event date passes), run `node scripts/build-events-static.js` and commit `events.html`.
+- **`robots.txt`** welcomes search and AI crawlers; **`llms.txt`** is a plain-language summary of the site
+  for AI assistants (update it when pages are added).
+- **After a deploy**, run `node scripts/indexnow.js` to tell Bing about changed pages (it also feeds
+  several AI assistants).
 
 You do **not** need to touch the `netlify/functions` folder unless you want to
 change how emails are worded.
