@@ -63,7 +63,7 @@
     bar.setAttribute('role', 'region');
     bar.setAttribute('aria-label', 'Cookie notice');
     bar.innerHTML =
-      '<p>We use cookies to measure how our ads perform. You can accept or decline. ' +
+      '<p>We use cookies to measure our ads. ' +
       '<a href="/privacy-policy.html">Privacy Policy</a></p>' +
       '<div class="cookie-actions">' +
       '<button type="button" class="btn btn-outline cookie-decline">Decline</button>' +
