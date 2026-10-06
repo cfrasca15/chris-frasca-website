@@ -44,6 +44,7 @@ const cards = upcoming.map((e) => {
         <p>${esc(e.location)}<br>${esc(e.address)}</p>
         <p>${esc(e.description)}</p>
         ${e.spots ? `<p class="hint">${esc(e.spots)}</p>` : ''}
+        ${e.offeredWith ? `<p class="hint">Offered with ${esc(e.offeredWith)}</p>` : ''}
         <p>${action}</p>
       </article>`;
 }).join('\n');

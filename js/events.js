@@ -130,7 +130,8 @@ function renderEvents() {
           <span><svg style="width:18px;height:18px;flex-shrink:0;color:var(--brass);" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.8"/></svg>${ev.location}</span>
         </div>
         <p>${ev.description}</p>
-        <p class="hint" style="margin-bottom:16px;">${ev.spots || ''}</p>
+        <p class="hint" style="margin-bottom:6px;">${ev.spots || ''}</p>
+        ${ev.offeredWith ? `<p class="hint" style="margin-bottom:16px;">Offered with ${ev.offeredWith}</p>` : ''}
         ${action}
       </div>
     `;
