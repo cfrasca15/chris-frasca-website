@@ -34,7 +34,7 @@ const EVENTS = [
     address: "24932 Veterans Way, Mission Viejo, CA 92692",
     description: "Learn about the most up-to-date changes to Medicare in 2027 and what you need to know before Annual Enrollment ends December 7.",
     spots: "Limited to 30 seats",
-    registrationOpensSoon: true
+    registerUrl: "https://events.providence.org/event?readableEventId=OC_2027_Medicare_Annual_Enrollment_In_person1048705819"
   },
   {
     id: "mission-viejo-2026-11-07",
@@ -45,7 +45,7 @@ const EVENTS = [
     address: "24932 Veterans Way, Mission Viejo, CA 92692",
     description: "Learn about the most up-to-date changes to Medicare in 2027 and what you need to know before Annual Enrollment ends December 7.",
     spots: "Limited to 30 seats",
-    registrationOpensSoon: true
+    registerUrl: "https://events.providence.org/event?readableEventId=OC_2027_Medicare_Annual_Enrollment_In_person3964953787"
   },
   {
     id: "mission-viejo-2026-11-16",
