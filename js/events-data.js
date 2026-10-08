@@ -33,7 +33,7 @@ const EVENTS = [
     title: "Medicare Annual Enrollment: What You Need to Know",
     date: "2026-10-27",
     time: "6:00 PM – 7:00 PM",
-    location: "Norman P. Murray Community and Senior Center, Juniper A&B",
+    location: "Norman P. Murray Community and Senior Center, Jacaranda B",
     address: "24932 Veterans Way, Mission Viejo, CA 92692",
     description: "Learn about the most up-to-date changes to Medicare in 2027 and what you need to know before Annual Enrollment ends December 7.",
     spots: "Limited to 30 seats",
