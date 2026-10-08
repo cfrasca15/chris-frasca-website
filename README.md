@@ -8,7 +8,7 @@ reminder emails. Everything runs on Netlify's free/low-cost tier on your own dom
 
 ## 1. What you're getting
 
-- **Main pages**: Home, About, Medicare Help, Turning 65 Events (with RSVP), Book a
+- **Main pages**: Home, About, Medicare Help, Annual Enrollment Events (with RSVP), Book a
   Consultation (Calendly), Contact, Privacy Policy
 - **Landing page for ads**: `plan-changes.html` (date-aware Annual Enrollment text,
   timeline, call-back form)
