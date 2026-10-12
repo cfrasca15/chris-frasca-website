@@ -8,11 +8,9 @@
    ============================================ */
 
 /* Fallback fonts sized to match the web fonts, so text doesn't jump when
-   Spectral and Public Sans finish loading. Values come from the font metrics. */
-@font-face { font-family: "Public Sans Fallback"; src: local("Arial"), local("Helvetica Neue"), local("Helvetica"); font-weight: 400 500; size-adjust: 105.24%; ascent-override: 90.27%; descent-override: 21.38%; line-gap-override: 0%; }
-@font-face { font-family: "Public Sans Fallback"; src: local("Arial Bold"), local("Helvetica Neue Bold"), local("Helvetica Bold"); font-weight: 600 700; size-adjust: 105.24%; ascent-override: 90.27%; descent-override: 21.38%; line-gap-override: 0%; }
-@font-face { font-family: "Spectral Fallback"; src: local("Georgia"); font-weight: 400 500; size-adjust: 100.46%; ascent-override: 105.41%; descent-override: 46.09%; line-gap-override: 0%; }
-@font-face { font-family: "Spectral Fallback"; src: local("Georgia Bold"); font-weight: 600 700; size-adjust: 88.18%; ascent-override: 120.10%; descent-override: 52.51%; line-gap-override: 0%; }
+   Merriweather and Open Sans finish loading. Values come from the font metrics. */
+@font-face { font-family: "Open Sans Fallback"; src: local("Arial"), local("Helvetica Neue"), local("Helvetica"); font-weight: 400 700; size-adjust: 105.15%; ascent-override: 101.65%; descent-override: 27.86%; line-gap-override: 0%; }
+@font-face { font-family: "Merriweather Fallback"; src: local("Georgia"); font-weight: 400 700; size-adjust: 108.8%; ascent-override: 90.44%; descent-override: 25.09%; line-gap-override: 0%; }
 
 :root {
   /* Color tokens */
@@ -32,8 +30,8 @@
   --error:      #A3432F;
 
   /* Type */
-  --font-display: 'Spectral', 'Spectral Fallback', Georgia, serif;
-  --font-body: 'Public Sans', 'Public Sans Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Merriweather', 'Merriweather Fallback', Georgia, serif;
+  --font-body: 'Open Sans', 'Open Sans Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
 
   --radius: 10px;
   --max-width: 1120px;
