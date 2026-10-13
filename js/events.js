@@ -36,7 +36,9 @@ function eventToSchema(ev) {
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     isAccessibleForFree: true,
-    organizer: { '@type': 'Person', name: 'Chris Frasca', url: SITE_URL + '/' }
+    image: [SITE_URL + '/images/og-share.jpg'],
+    organizer: { '@type': 'Person', name: 'Chris Frasca', url: SITE_URL + '/' },
+    performer: { '@type': 'Person', name: 'Chris Frasca', url: SITE_URL + '/' }
   };
 
   const t = String(ev.time || '').match(/(\d{1,2}):(\d{2})\s*(AM|PM)\s*[–-]\s*(\d{1,2}):(\d{2})\s*(AM|PM)/i);
@@ -60,16 +62,15 @@ function eventToSchema(ev) {
       : ev.address
   };
 
-  // Only advertise a way to register once there is one.
-  if (!ev.registrationOpensSoon) {
-    schema.offers = {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
-      url: ev.registerUrl || SITE_URL + '/events.html#rsvp'
-    };
-  }
+  // Always include an offer (Google expects one). Until a registration link exists, point at the events page.
+  schema.offers = {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+    availability: 'https://schema.org/InStock',
+    validFrom: '2026-10-01T00:00:00-07:00',
+    url: (!ev.registrationOpensSoon && ev.registerUrl) || SITE_URL + '/events.html#rsvp'
+  };
   return schema;
 }
 
