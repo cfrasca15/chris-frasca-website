@@ -41,6 +41,7 @@ const FOOTER = `
             <li><a href="/medicare-advantage-vs-medigap-california.html">Medicare Advantage vs. Medigap</a></li>
             <li><a href="/find-a-local-insurance-agent-for-medicare.html">Finding a Local Agent</a></li>
             <li><a href="/2027-medicare-changes-california.html">2027 Changes in California</a></li>
+            <li><a href="/hoag-medicare-advantage-changes-2027.html">Hoag Patients: 2027 Changes</a></li>
           </ul>
         </div>
         <div>
