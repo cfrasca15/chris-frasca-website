@@ -31,7 +31,7 @@ function renderReviews(root, reviews) {
 
     const author = document.createElement('div');
     author.className = 'review-author';
-    author.textContent = '— ' + (r.author || 'Google user');
+    author.textContent = r.author || 'Google user';
 
     card.append(stars, quote, author);
     track.appendChild(card);

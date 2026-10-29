@@ -16,8 +16,8 @@ const pairs = [
   ['<a href="/turning-65-medicare-guide.html" style="color:var(--brass-light);font-weight:600;text-decoration:underline;">Prefer to read first? See the turning-65 enrollment guide &rarr;</a>',
    '<a href="/2027-medicare-changes-california.html" style="color:var(--brass-light);font-weight:600;text-decoration:underline;">Prefer to read first? See the 2027 Medicare changes guide &rarr;</a>'],
   ['Join a Turning 65 event near you', 'Join an Annual Enrollment workshop near you'],
-  ["I host no-cost, no-pressure workshops that break down Medicare basics &mdash; RSVP takes two minutes and you'll get a reminder before the day.",
-   "I host no-cost, no-pressure workshops on what's changing for Medicare in 2027 &mdash; RSVP takes two minutes and you'll get a reminder before the day."],
+  ["I host no-cost, no-pressure workshops that break down Medicare basics. RSVP takes two minutes and you'll get a reminder before the day.",
+   "I host no-cost, no-pressure workshops on what's changing for Medicare in 2027. RSVP takes two minutes and you'll get a reminder before the day."],
   ['Turning 65 workshops', 'Annual Enrollment workshops'],
 ];
 

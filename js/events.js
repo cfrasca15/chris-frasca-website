@@ -98,7 +98,7 @@ function renderEvents() {
                           .sort((a,b) => new Date(a.date) - new Date(b.date));
 
   if (upcoming.length === 0) {
-    list.innerHTML = '<p class="lede">No events are scheduled right now — check back soon, or contact me directly for one-on-one help.</p>';
+    list.innerHTML = '<p class="lede">No events are scheduled right now. Check back soon, or contact me directly for one-on-one help.</p>';
   } else {
     injectEventSchema(upcoming);
   }
@@ -110,7 +110,7 @@ function renderEvents() {
     if (ev.registerUrl) {
       action = `<a href="${ev.registerUrl}" class="btn btn-primary" target="_blank" rel="noopener">Register for this event</a>`;
     } else if (ev.registrationOpensSoon) {
-      action = `<p class="hint" style="margin:0;">Registration opens soon &mdash; check back, or call <a href="tel:9492596744" style="white-space:nowrap;">949-259-6744</a>.</p>`;
+      action = `<p class="hint" style="margin:0;">Registration opens soon. Check back, or call <a href="tel:9492596744" style="white-space:nowrap;">949-259-6744</a>.</p>`;
     } else {
       action = `<a href="#rsvp" class="btn btn-primary rsvp-jump" data-event="${ev.id}">RSVP for this event</a>`;
     }
@@ -142,7 +142,7 @@ function renderEvents() {
     if (!ev.registerUrl && !ev.registrationOpensSoon) {
       const opt = document.createElement('option');
       opt.value = ev.id;
-      opt.textContent = `${d.full} — ${ev.title}`;
+      opt.textContent = `${d.full}: ${ev.title}`;
       select.appendChild(opt);
     }
   });
