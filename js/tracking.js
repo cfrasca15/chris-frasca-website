@@ -11,7 +11,8 @@
   var AW_ID = 'AW-10860847307';
   var CONVERSIONS = {
     contact: 'AW-10860847307/YNjKCKy32I8dEMvB7boo',   // contact form submitted
-    booking: 'AW-10860847307/LQSiCK-32I8dEMvB7boo'    // Calendly consultation booked
+    booking: 'AW-10860847307/LQSiCK-32I8dEMvB7boo',   // Calendly consultation booked
+    call: ''                                           // tap on a phone number (paste the send_to from Google Ads)
   };
 
   window.dataLayer = window.dataLayer || [];
@@ -49,6 +50,12 @@
     var sendTo = CONVERSIONS[name];
     if (sendTo) gtag('event', 'conversion', { send_to: sendTo });
   };
+
+  // Any tap on a tel: link counts as a call conversion, once a "call" send_to is filled in above.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href^="tel:"]') : null;
+    if (a) window.trackConversion('call');
+  });
 
   // Calendly tells the page when a booking is completed (inline and popup).
   window.addEventListener('message', function (e) {
