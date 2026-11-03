@@ -114,9 +114,23 @@
       <div class="card booking-mobile-card">
         <h2 style="font-size:1.4rem;">Tap Below to Pick Your Time</h2>
         <p>Your available times will open right here. Choose one and you're booked in under a minute.</p>
-        <a href="https://calendly.com/chrisfrascainsurance" target="_blank" rel="noopener" class="btn btn-primary btn-block booking-tap-btn" onclick="if (window.Calendly) { Calendly.initPopupWidget({url: 'https://calendly.com/chrisfrascainsurance'}); return false; }">See Available Times &amp; Book &rarr;</a>
+        <a href="https://calendly.com/chrisfrascainsurance" target="_blank" rel="noopener" class="btn btn-primary btn-block booking-tap-btn" onclick="if (window.Calendly) { Calendly.initPopupWidget({url: this.href}); return false; }">See Available Times &amp; Book &rarr;</a>
       </div>
     </div>
+    <script>
+      // When this visit came from a Google ad, tag the Calendly link so the booking
+      // shows UTM Source "google", Medium "cpc" and the ad's landing page as Campaign.
+      // Runs before widget.js so the inline widget picks up the tagged URL.
+      (function () {
+        var landing = null;
+        try { landing = sessionStorage.getItem('adLanding'); } catch (e) {}
+        if (!landing && /[?&](gclid|gbraid|wbraid)=/.test(location.search)) landing = 'bookings';
+        if (!landing) return;
+        var url = 'https://calendly.com/chrisfrascainsurance?utm_source=google&utm_medium=cpc&utm_campaign=' + encodeURIComponent(landing);
+        document.querySelector('.calendly-inline-widget').setAttribute('data-url', url);
+        document.querySelector('.booking-tap-btn').href = url;
+      })();
+    </script>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
     <p class="fine-print center" style="margin:18px auto 0;">By booking, you agree that Chris Frasca Insurance Services may contact you by phone, text message, and email about your appointment and Medicare plans. A licensed insurance agent will contact you. Consent is not required to receive services. Message and data rates may apply; reply STOP to opt out of texts. See the <a href="/privacy-policy.html">Privacy Policy</a>.</p>
     <p class="hint center" style="margin-top:18px;">Having trouble with the scheduler? Call or email me directly at <a href="tel:9492596744">949-259-6744</a> or <a href="mailto:chris@chrisfrascainsurance.com">chris@chrisfrascainsurance.com</a>.</p>

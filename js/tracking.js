@@ -15,6 +15,15 @@
     call: 'AW-10860847307/Nzw7COatx7EdEMvB7boo'       // "Website phone call": tap on a phone number
   };
 
+  // Remember, for this browser tab only, which page a Google ad visit landed on,
+  // so bookings.html can tell Calendly the booking came from an ad. Stores the
+  // page name, not the click ID.
+  try {
+    if (/[?&](gclid|gbraid|wbraid)=/.test(location.search) && !sessionStorage.getItem('adLanding')) {
+      sessionStorage.setItem('adLanding', location.pathname.replace(/^\/|\.html$/g, '') || 'index');
+    }
+  } catch (e) {}
+
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
   window.gtag = gtag;
