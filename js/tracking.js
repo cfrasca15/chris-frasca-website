@@ -12,7 +12,7 @@
   var CONVERSIONS = {
     contact: 'AW-10860847307/YNjKCKy32I8dEMvB7boo',   // contact form submitted
     booking: 'AW-10860847307/LQSiCK-32I8dEMvB7boo',   // Calendly consultation booked
-    call: ''                                           // tap on a phone number (paste the send_to from Google Ads)
+    call: 'AW-10860847307/Nzw7COatx7EdEMvB7boo'       // "Website phone call": tap on a phone number
   };
 
   window.dataLayer = window.dataLayer || [];
@@ -27,6 +27,9 @@
 
   gtag('consent', 'default', DENIED);
   if (getChoice() === 'granted') gtag('consent', 'update', GRANTED);
+  // URL passthrough carries the ad click ID in internal links when cookies are
+  // declined, so a booking or call on a later page still credits the ad. It sets no cookies.
+  gtag('set', 'url_passthrough', true);
   gtag('js', new Date());
   gtag('config', AW_ID);
 
