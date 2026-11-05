@@ -118,15 +118,16 @@
       </div>
     </div>
     <script>
-      // When this visit came from a Google ad, tag the Calendly link so the booking
-      // shows UTM Source "google", Medium "cpc" and the ad's landing page as Campaign.
-      // Runs before widget.js so the inline widget picks up the tagged URL.
+      // When this visit came from a Google or Microsoft ad, tag the Calendly link so the
+      // booking shows UTM Source "google" or "bing", Medium "cpc" and the ad's landing
+      // page as Campaign. Runs before widget.js so the inline widget picks up the tagged URL.
       (function () {
-        var landing = null;
-        try { landing = sessionStorage.getItem('adLanding'); } catch (e) {}
-        if (!landing && /[?&](gclid|gbraid|wbraid)=/.test(location.search)) landing = 'bookings';
+        var landing = null, source = null;
+        try { landing = sessionStorage.getItem('adLanding'); source = sessionStorage.getItem('adSource'); } catch (e) {}
+        if (!landing && /[?&](gclid|gbraid|wbraid)=/.test(location.search)) { landing = 'bookings'; source = 'google'; }
+        if (!landing && /[?&]msclkid=/.test(location.search)) { landing = 'bookings'; source = 'bing'; }
         if (!landing) return;
-        var url = 'https://calendly.com/chrisfrascainsurance?utm_source=google&utm_medium=cpc&utm_campaign=' + encodeURIComponent(landing);
+        var url = 'https://calendly.com/chrisfrascainsurance?utm_source=' + (source || 'google') + '&utm_medium=cpc&utm_campaign=' + encodeURIComponent(landing);
         document.querySelector('.calendly-inline-widget').setAttribute('data-url', url);
         document.querySelector('.booking-tap-btn').href = url;
       })();
