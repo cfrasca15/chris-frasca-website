@@ -17,10 +17,10 @@
 
   // Microsoft Advertising (Bing) UET tag ID, from Microsoft Ads > Tools > UET tag.
   // Until it is filled in, the Microsoft tag is not loaded.
-  var UET_ID = '';
-  // Microsoft goal names: in Microsoft Ads, create one goal per line below with
-  // type "Event" and Action equal to the value shown.
-  var UET_EVENTS = { contact: 'lead_form', booking: 'booking', call: 'phone_call' };
+  var UET_ID = '187286249';
+  // Microsoft conversion goals (custom event, manual tracking); each value is the
+  // goal's Action: SubmitLeadForm, BookAppointment, Contact (tap on a phone number).
+  var UET_EVENTS = { contact: 'submit_lead_form', booking: 'book_appointment', call: 'contact' };
 
   // Remember, for this browser tab only, which page an ad visit landed on and
   // which ad network sent it, so bookings.html can tell Calendly the booking came
