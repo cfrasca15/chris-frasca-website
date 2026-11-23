@@ -1,33 +1,19 @@
 // netlify/functions/get-reviews.js
 //
-// Returns the Google reviews cached in Airtable by fetch-google-reviews.js,
+// Returns the Google reviews cached in Netlify Blobs by fetch-google-reviews.js,
 // as plain JSON, so the review carousel on the website can display real
-// reviews without ever exposing an Airtable or Google API key to the browser.
-//
-// Requires the same AIRTABLE_API_KEY / AIRTABLE_BASE_ID / AIRTABLE_REVIEWS_TABLE_NAME
-// environment variables as fetch-google-reviews.js.
+// reviews without ever exposing a Google API key to the browser.
 
-exports.handler = async () => {
-  const { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_REVIEWS_TABLE_NAME } = process.env;
+const { connect, readReviews } = require('./lib/reviews-store');
 
+exports.handler = async (event) => {
+  connect(event);
   try {
-    const params = new URLSearchParams({
-      'sort[0][field]': 'Publish Time',
-      'sort[0][direction]': 'desc'
-    });
-    const res = await fetch(
-      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_REVIEWS_TABLE_NAME)}?${params}`,
-      { headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}` } }
-    );
-    const json = await res.json();
-    if (json.error) {
-      console.error('Airtable error:', json.error);
-    }
-    const reviews = (json.records || []).map(rec => ({
-      author: rec.fields['Author Name'],
-      rating: rec.fields['Rating'],
-      text: rec.fields['Review Text']
-    }));
+    const data = await readReviews();
+    const reviews = (data.reviews || [])
+      .slice()
+      .sort((a, b) => String(b.publishTime || '').localeCompare(String(a.publishTime || '')))
+      .map(r => ({ author: r.author, rating: r.rating, text: r.text }));
 
     return {
       statusCode: 200,
@@ -39,6 +25,7 @@ exports.handler = async () => {
     };
   } catch (err) {
     console.error('get-reviews error:', err);
-    return { statusCode: 500, body: JSON.stringify({ reviews: [] }) };
+    // Empty list: the page keeps the placeholder reviews already in its HTML.
+    return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ reviews: [] }) };
   }
 };

@@ -4,6 +4,12 @@
 // job) and refresh-reviews.js (an on-demand endpoint for forcing a sync
 // right away, since Netlify only allows scheduled functions to run on
 // their cron schedule — they can't be triggered manually via their URL).
+//
+// Reviews are cached in Netlify Blobs (see reviews-store.js). If Google
+// returns an error or no reviews, the last good copy is left untouched so the
+// website never ends up with an empty carousel.
+
+const { writeReviews } = require('./reviews-store');
 
 function describeError(error) {
   if (typeof error === 'string') return error;
@@ -11,10 +17,7 @@ function describeError(error) {
 }
 
 async function syncGoogleReviews() {
-  const {
-    GOOGLE_PLACES_API_KEY, GOOGLE_PLACE_ID,
-    AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_REVIEWS_TABLE_NAME
-  } = process.env;
+  const { GOOGLE_PLACES_API_KEY, GOOGLE_PLACE_ID } = process.env;
 
   let reviews = [];
   try {
@@ -38,66 +41,26 @@ async function syncGoogleReviews() {
     return { ok: false, message: 'Places API fetch failed' };
   }
 
-  const tableUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_REVIEWS_TABLE_NAME)}`;
-  const airtableHeaders = {
-    'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-    'Content-Type': 'application/json'
-  };
+  if (reviews.length === 0) {
+    return { ok: true, message: 'Google returned no reviews; kept the existing cache' };
+  }
 
-  const freshIds = reviews.map(r => r.name);
+  const cleaned = reviews.map(r => ({
+    id: r.name,
+    author: r.authorAttribution?.displayName || 'Google user',
+    rating: r.rating || 5,
+    text: r.text?.text || r.originalText?.text || '',
+    publishTime: r.publishTime || ''
+  }));
 
-  // Remove any cached reviews that are no longer in Google's top 5
   try {
-    const existingRes = await fetch(tableUrl, { headers: airtableHeaders });
-    const existingJson = await existingRes.json();
-    if (existingJson.error) {
-      console.error('Airtable read error:', existingJson.error);
-      return { ok: false, message: `Airtable read error: ${describeError(existingJson.error)}` };
-    }
-    const staleRecordIds = (existingJson.records || [])
-      .filter(rec => !freshIds.includes(rec.fields['Review ID']))
-      .map(rec => rec.id);
-
-    for (let i = 0; i < staleRecordIds.length; i += 10) {
-      const batch = staleRecordIds.slice(i, i + 10);
-      const query = batch.map(id => `records[]=${id}`).join('&');
-      await fetch(`${tableUrl}?${query}`, { method: 'DELETE', headers: airtableHeaders });
-    }
+    await writeReviews(cleaned);
   } catch (err) {
-    console.error('Airtable cleanup failed:', err);
+    console.error('Blobs write failed:', err);
+    return { ok: false, message: `Saving reviews failed: ${describeError(err)}` };
   }
 
-  // Upsert the current top reviews
-  if (reviews.length > 0) {
-    try {
-      const upsertRes = await fetch(tableUrl, {
-        method: 'PATCH',
-        headers: airtableHeaders,
-        body: JSON.stringify({
-          performUpsert: { fieldsToMergeOn: ['Review ID'] },
-          records: reviews.map(r => ({
-            fields: {
-              'Review ID': r.name,
-              'Author Name': r.authorAttribution?.displayName || 'Google user',
-              'Rating': r.rating || 5,
-              'Review Text': r.text?.text || r.originalText?.text || '',
-              'Publish Time': r.publishTime || ''
-            }
-          }))
-        })
-      });
-      const upsertJson = await upsertRes.json();
-      if (upsertJson.error) {
-        console.error('Airtable upsert error:', upsertJson.error);
-        return { ok: false, message: `Airtable upsert error: ${describeError(upsertJson.error)}` };
-      }
-    } catch (err) {
-      console.error('Airtable upsert failed:', err);
-      return { ok: false, message: 'Airtable upsert failed' };
-    }
-  }
-
-  return { ok: true, message: `Cached ${reviews.length} review(s)` };
+  return { ok: true, message: `Cached ${cleaned.length} review(s)` };
 }
 
 module.exports = { syncGoogleReviews };

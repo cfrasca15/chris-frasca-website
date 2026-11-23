@@ -2,5 +2,8 @@
   "name": "chris-frasca-insurance",
   "version": "1.0.0",
   "private": true,
-  "description": "Chris Frasca Insurance Services website + RSVP/email automation"
+  "description": "Chris Frasca Insurance Services website + RSVP/email automation",
+  "dependencies": {
+    "@netlify/blobs": "^11.1.10"
+  }
 }

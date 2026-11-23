@@ -7,8 +7,10 @@
 //   https://chrisfrascainsurance.com/.netlify/functions/refresh-reviews
 
 const { syncGoogleReviews } = require('./lib/sync-google-reviews');
+const { connect } = require('./lib/reviews-store');
 
-exports.handler = async () => {
+exports.handler = async (event) => {
+  connect(event);
   const result = await syncGoogleReviews();
   return { statusCode: result.ok ? 200 : 500, body: result.message };
 };
