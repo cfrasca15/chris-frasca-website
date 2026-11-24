@@ -4,14 +4,24 @@ async function setupReviewCarousel(root) {
   try {
     const res = await fetch('/.netlify/functions/get-reviews');
     if (res.ok) {
-      const { reviews } = await res.json();
+      const { reviews, averageRating, totalReviewCount } = await res.json();
       if (Array.isArray(reviews) && reviews.length > 0) renderReviews(root, reviews);
+      updateReviewSummary(averageRating, totalReviewCount);
     }
   } catch (err) {
     // Function unreachable (e.g. viewing the site as a local file) — keep
     // the placeholder reviews already in the HTML.
   }
   initReviewCarousel(root);
+}
+
+// Keeps the "5.0 stars from N Google reviews" line in step with Google's count.
+function updateReviewSummary(average, total) {
+  if (!(total > 0) || !(average > 0)) return;
+  const stars = '★'.repeat(Math.max(1, Math.min(5, Math.round(average))));
+  document.querySelectorAll('[data-review-summary]').forEach(el => {
+    el.textContent = stars + ' ' + average.toFixed(1) + ' stars from ' + total + ' Google reviews';
+  });
 }
 
 function renderReviews(root, reviews) {
