@@ -3,12 +3,17 @@
 // Where the cached Google reviews live. They are kept in Netlify Blobs (built
 // into Netlify, no separate account and no API-call limit) instead of Airtable.
 //
-// Stored as one JSON document: { reviews: [...], updatedAt: "ISO date" }.
+// Stored as one JSON document:
+//   { reviews: [...], updatedAt, source, averageRating, totalReviewCount }
+//
+// Google's Business Profile API terms allow keeping review data for at most 30
+// days, so get-reviews stops serving a copy older than that.
 
 const { getStore, connectLambda } = require('@netlify/blobs');
 
 const STORE_NAME = 'google-reviews';
 const KEY = 'latest';
+const MAX_AGE_MS = 29 * 24 * 60 * 60 * 1000;
 
 // Call once at the top of each handler so Blobs can find this site.
 function connect(event) {
@@ -28,8 +33,12 @@ async function readReviews() {
   return data || { reviews: [], updatedAt: null };
 }
 
-async function writeReviews(reviews) {
-  await store().setJSON(KEY, { reviews, updatedAt: new Date().toISOString() });
+async function writeReviews(reviews, meta = {}) {
+  await store().setJSON(KEY, { ...meta, reviews, updatedAt: new Date().toISOString() });
 }
 
-module.exports = { connect, readReviews, writeReviews };
+function isFresh(data) {
+  return !!(data && data.updatedAt && Date.now() - new Date(data.updatedAt).getTime() < MAX_AGE_MS);
+}
+
+module.exports = { connect, readReviews, writeReviews, isFresh };
